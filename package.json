@@ -1,0 +1,88 @@
+{
+  "name": "react-redux-skeleton",
+  "version": "0.0.0",
+  "description": "skeleton module",
+  "bugs": "&#39;&#39;",
+  "author": "rmohaan <skeleton>",
+  "license": "SEE LICENSE IN LICENSE",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "&#39;&#39;"
+  },
+  "publishConfig": {
+    "registry": "https://npm.advisory.com"
+  },
+  "keywords": [
+    "react-redux-skeleton",
+    "Console360",
+    ""
+  ],
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "css-loader": "^0.26.1",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "griddle-react": "^0.7.0",
+    "lodash": "^4.17.2",
+    "mongodb": "^2.2.12",
+    "monk": "^3.1.3",
+    "node-sass": "^3.13.0",
+    "redux": "^3.6.0",
+    "sass-loader": "^4.0.2",
+    "serve-favicon": "^2.3.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {
+    "axios": "^0.15.3",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-istanbul": "^1.1.0",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.3.13",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "cross-env": "^2.0.0",
+    "envify": "^1.2.1",
+    "envify-loader": "^0.1.0",
+    "enzyme": "^2.3.0",
+    "expect": "^1.20.1",
+    "gaze-cli": "^0.2.0",
+    "jsdom": "^9.2.0",
+    "mocha": "^2.4.5",
+    "mocha-bamboo-reporter": "^1.1.0",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^1.5.1",
+    "nyc": "^8.3.1",
+    "react": "^15.2.1",
+    "react-addons-test-utils": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.6.0",
+    "react-router-redux": "^4.0.5",
+    "redux-thunk": "^2.1.0",
+    "router": "^1.1.4"
+  },
+  "peerDependencies": {
+    "@abco/ui-react-drawer-page": "^1.3.0"
+  },
+  "nyc": {
+    "exclude": [
+      "**/client/reducers/*.js",
+      "**/client/actions/*.js",
+      "**/middleware/**/*.js",
+      "**/test/**.js"
+    ]
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "buildDev": "webpack -d --watch",
+    "build": "cross-env NODE_ENV=development babel src --out-dir dist"
+  }
+}

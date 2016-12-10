@@ -1,0 +1,2 @@
+--require babel-core/register
+--require test/utils/dom.js
