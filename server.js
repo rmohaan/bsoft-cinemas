@@ -45,11 +45,36 @@ MongoClient.connect('mongodb://localhost:27017/fmcg', (err, database) => {
   });
 
   app.put('/api/submitOrder', (req, res) => {
+    console.log("data")
     console.log("submitOrder", req.body)
-      db.collection('orders').insert(req.body, function (err, results) {
+    var data = req.body;
+    var stocksUpdateData = data.stockts_update;
+    console.log(stocksUpdateData)
+    delete data["stockts_update"];
+      db.collection('orders').insert(data, function (err, results) {
           console.log(results);
           if (results.result.ok === 1) {
-            res.status(200).json(results);
+            var stocksUpdateDataLength=stocksUpdateData.length;
+            var succssfulCount=0;
+            stocksUpdateData.map((item) => { 
+              var id = item.Product_Code;
+              delete item["Product_Code"];
+               console.log("testing" + item)
+              db.collection('stocks').updateOne({"Product_Code" : id},{$set: item}, function (err, updateResult) {
+                  console.log(updateResult);
+                  if (updateResult.result.ok === 1) {
+                   succssfulCount +=1;
+                  } else {
+                    res.status(500).json({message:"Request Failed"});
+                  }
+                   console.log(stocksUpdateDataLength + ":" + succssfulCount)
+                    if(succssfulCount === stocksUpdateDataLength){
+                      console.log("success");
+                      res.status(200).json(results);
+                    }
+              });
+            });
+
           } else {
             res.status(500).json({message:"Request Failed"});
           }

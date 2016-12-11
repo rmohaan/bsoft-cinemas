@@ -85,9 +85,10 @@ class ProductsList extends React.Component {
     // });
 }
 
+
 _updateRowChange (row, event) {
-  console.log("row value", row);
-  console.log("Event", event);
+  //console.log("row value", row);
+  //console.log("Event", event);
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
   if (!item) {
@@ -95,6 +96,11 @@ _updateRowChange (row, event) {
       ...row.props.data,
       quantity: 1
     });
+    for ( const arrValue of exis ) {
+      if(arrValue.Product_Code === row.props.data.Product_Code){
+        arrValue.Availability -=1;
+      }
+    }
     // row.props.data.Availability -= 1;
   } else {
     if (item.Availability > 1) {
