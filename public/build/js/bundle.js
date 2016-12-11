@@ -30052,6 +30052,7 @@
 	  productsList: reducers.productsList,
 	  selectedItems: reducers.selectedItems,
 	  orderInfo: reducers.orderInfo,
+	  moqList: reducers.moqList,
 	  routing: _reactRouterRedux.routerReducer
 	});
 	
@@ -30110,6 +30111,7 @@
 	exports.productsList = productsList;
 	exports.selectedItems = selectedItems;
 	exports.orderInfo = orderInfo;
+	exports.moqList = moqList;
 	
 	var _events = __webpack_require__(/*! ../actions/events */ 277);
 	
@@ -30149,6 +30151,17 @@
 	
 	  return newState;
 	}
+	
+	function moqList(state, action) {
+	  var actionType = action.type,
+	      newState = Object.assign({}, state);
+	
+	  if (actionType === actionEvents.SET_MOQ_DATA) {
+	    newState = action.payload;
+	  }
+	
+	  return newState;
+	}
 
 /***/ },
 /* 277 */
@@ -30166,6 +30179,7 @@
 	var SET_SELECTED_ITEMS = exports.SET_SELECTED_ITEMS = 'SET_SELECTED_ITEMS';
 	var SET_ORDER_INFO = exports.SET_ORDER_INFO = 'SET_ORDER_INFO';
 	var SET_CUSTOMER_INFO = exports.SET_CUSTOMER_INFO = 'SET_CUSTOMER_INFO';
+	var SET_MOQ_DATA = exports.SET_MOQ_DATA = 'SET_MOQ_DATA';
 
 /***/ },
 /* 278 */
@@ -30182,6 +30196,7 @@
 	var state = {
 	  productsList: [],
 	  selectedItems: [],
+	  moqList: [],
 	  orderInfo: {}
 	};
 	
@@ -30887,9 +30902,8 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
-	exports.default = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -30901,6 +30915,22 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _index = __webpack_require__(/*! ../actions/index */ 523);
+	
+	var actions = _interopRequireWildcard(_index);
+	
+	var _reactRedux = __webpack_require__(/*! react-redux */ 241);
+	
+	var _griddleReact = __webpack_require__(/*! griddle-react */ 289);
+	
+	var _griddleReact2 = _interopRequireDefault(_griddleReact);
+	
+	var _searchBar = __webpack_require__(/*! ./searchBar */ 522);
+	
+	var _searchBar2 = _interopRequireDefault(_searchBar);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30909,52 +30939,123 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var columnMetaData = [{
+	  "columnName": "Product_Code",
+	  "order": 1,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Code"
+	}, {
+	  "columnName": "Product_Name",
+	  "order": 2,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Name"
+	}, {
+	  "columnName": "Stock_Position",
+	  "order": 3,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Item Location"
+	}, {
+	  "columnName": "Availability",
+	  "order": 4,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Qty Available"
+	}, {
+	  "columnName": "Quantity",
+	  "order": 5,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Unit"
+	}, {
+	  "columnName": "Price",
+	  "order": 6,
+	  "locked": false,
+	  "visible": true,
+	  "displayName": "Price"
+	}];
+	
 	var Dashboard = function (_React$Component) {
-	    _inherits(Dashboard, _React$Component);
+	  _inherits(Dashboard, _React$Component);
 	
-	    function Dashboard() {
-	        _classCallCheck(this, Dashboard);
+	  function Dashboard() {
+	    _classCallCheck(this, Dashboard);
 	
-	        var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
 	
-	        _this.state = {
-	            links: ''
-	        };
-	        String.prototype.capitalize = function () {
-	            return this.charAt(0).toUpperCase() + this.slice(1);
-	        };
-	        return _this;
+	    _this.state = {
+	      links: ''
+	    };
+	    String.prototype.capitalize = function () {
+	      return this.charAt(0).toUpperCase() + this.slice(1);
+	    };
+	    _this.customFilterFunction = function (items, query) {
+	      return _this._customFilterFunction(items, query);
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Dashboard, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.dispatch(actions.fetchMoQList());
 	    }
+	  }, {
+	    key: '_customFilterFunction',
+	    value: function _customFilterFunction(items, query) {
+	      console.log("items: ", items);
+	      console.log("query: ", query);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log("testing");
+	      console.log(this.props.moqList);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'container-fluid' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-12' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_griddleReact2.default, { results: this.props.moqList,
+	                tableClassName: 'table table-hover',
+	                showFilter: true,
+	                enableInfiniteScroll: true,
+	                resultsPerPage: 5,
+	                bodyHeight: 500,
+	                useFixedHeader: true,
+	                columnMetadata: columnMetaData,
+	                columns: ["Product_Code", "Product_Name", "Stock_Position", "Availability", "Quantity", "Price"],
+	                filterPlaceholderText: 'Search Item Code',
+	                useCustomFilterComponent: true,
+	                customFilterComponent: _searchBar2.default,
+	                customFilterer: this.customFilterFunction })
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 	
-	    _createClass(Dashboard, [{
-	        key: 'render',
-	        value: function render() {
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'row placeholders' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-6 col-sm-3 placeholder' },
-	                    _react2.default.createElement(
-	                        'h4',
-	                        null,
-	                        'Label'
-	                    ),
-	                    _react2.default.createElement(
-	                        'span',
-	                        { className: 'text-muted' },
-	                        'MoQ details will come here...'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Dashboard;
+	  return Dashboard;
 	}(_react2.default.Component);
 	
-	exports.default = Dashboard;
+	function select(state) {
+	  console.log(state);
+	  return {
+	    moqList: state.moqList
+	  };
+	}
+	
+	exports.default = (0, _reactRedux.connect)(select)(Dashboard);
 
 /***/ },
 /* 287 */
@@ -42086,12 +42187,14 @@
 	  value: true
 	});
 	exports.setData = setData;
+	exports.setMoQData = setMoQData;
 	exports.setSelectedItems = setSelectedItems;
 	exports.setOrderInfo = setOrderInfo;
 	exports.setCustomerInfo = setCustomerInfo;
 	exports.fetchProductsList = fetchProductsList;
 	exports.submitOrder = submitOrder;
 	exports.submitCustomerInfo = submitCustomerInfo;
+	exports.fetchMoQList = fetchMoQList;
 	
 	var _events = __webpack_require__(/*! ./events */ 277);
 	
@@ -42108,6 +42211,13 @@
 	function setData(data) {
 	  return {
 	    type: actionEvents.SET_DATA,
+	    payload: data
+	  };
+	}
+	
+	function setMoQData(data) {
+	  return {
+	    type: actionEvents.SET_MOQ_DATA,
 	    payload: data
 	  };
 	}
@@ -42167,6 +42277,15 @@
 	    });
 	  };
 	}
+	
+	function fetchMoQList() {
+	  return function (dispatch) {
+	    // dispatch(fetchingData());
+	    return dataRequests.fetchMoQList().then(function (response) {
+	      dispatch(setMoQData(response.data));
+	    });
+	  };
+	}
 
 /***/ },
 /* 524 */
@@ -42183,6 +42302,7 @@
 	  value: true
 	});
 	exports.fetchProductsList = fetchProductsList;
+	exports.fetchMoQList = fetchMoQList;
 	exports.submitOrder = submitOrder;
 	exports.submitCustomerInfo = submitCustomerInfo;
 	
@@ -42205,6 +42325,13 @@
 	  return (0, _axios2.default)({
 	    method: 'get',
 	    url: '/api/getProductsList'
+	  });
+	}
+	
+	function fetchMoQList() {
+	  return (0, _axios2.default)({
+	    method: 'get',
+	    url: '/api/getMoQList'
 	  });
 	}
 	
@@ -43943,6 +44070,7 @@
 	      console.log("list :" + this.props.list);
 	      var products = this.props.list;
 	      var stocksUpdate = [];
+	      var MoQ = [];
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -43958,8 +44086,9 @@
 	              var jsonData = {};
 	              jsonData["Product_Code"] = arrValue.Product_Code;
 	              jsonData["Availability"] = arrValue.Availability;
-	              if (arrValue.Availability < 5) {
-	                console.log(productobj);
+	              if (arrValue.Availability <= 5) {
+	                productobj.Availability = arrValue.Availability;
+	                MoQ.push(productobj);
 	              }
 	              stocksUpdate.push(jsonData);
 	            }
@@ -43996,7 +44125,7 @@
 	      console.log(stocksUpdate);
 	      var toInsert = [].concat(_toConsumableArray(selectedItemList)); //{...list, totalAmount: totalAmount};
 	      // console.log();
-	      this.props.dispatch(actions.submitOrder(_extends({}, toInsert, { totalAmount: totalAmount, stockts_update: stocksUpdate })));
+	      this.props.dispatch(actions.submitOrder(_extends({}, toInsert, { totalAmount: totalAmount, stocks_update: stocksUpdate, MoQ_update: MoQ })));
 	    }
 	  }, {
 	    key: 'render',

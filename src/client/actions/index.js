@@ -11,6 +11,13 @@ export function setData (data) {
   };
 }
 
+export function setMoQData (data) {
+  return {
+    type: actionEvents.SET_MOQ_DATA,
+    payload: data
+  };
+}
+
 export function setSelectedItems (data) {
   return {
     type: actionEvents.SET_SELECTED_ITEMS,
@@ -66,6 +73,16 @@ export function submitCustomerInfo (items) {
            // dispatch(setCustomerInfo());
            dispatch(push('/'));
          }
+       });
+  };
+}
+
+export function fetchMoQList () {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.fetchMoQList()
+       .then(function (response) {
+         dispatch(setMoQData(response.data));
        });
   };
 }

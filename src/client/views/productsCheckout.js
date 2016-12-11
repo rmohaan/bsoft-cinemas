@@ -91,6 +91,7 @@ class ProductsCheckout extends React.Component {
       console.log("list :" + this.props.list);
       let products=this.props.list;
       let stocksUpdate = [];
+      let MoQ = [];
       for ( const arrValue of selectedItemList ) {
             console.log( arrValue ); // 'hello', 'world'
             Object.keys(products).forEach(function (key) {
@@ -99,8 +100,9 @@ class ProductsCheckout extends React.Component {
                 var jsonData = {};
                 jsonData["Product_Code"] = arrValue.Product_Code;
                 jsonData["Availability"] = arrValue.Availability;
-                if(arrValue.Availability < 5){
-                  console.log(productobj)
+                if(arrValue.Availability <= 5){
+                  productobj.Availability = arrValue.Availability;
+                  MoQ.push(productobj);
                 }
                 stocksUpdate.push(jsonData)
               }
@@ -122,7 +124,7 @@ class ProductsCheckout extends React.Component {
      console.log(stocksUpdate);
       let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
       // console.log();
-      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stockts_update: stocksUpdate}));
+      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate , MoQ_update: MoQ}));
   }
 
 render () {

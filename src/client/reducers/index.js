@@ -34,3 +34,14 @@ export function orderInfo (state, action) {
 
   return newState;
 }
+
+export function moqList (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_MOQ_DATA) {
+    newState = action.payload;
+  }
+
+  return newState;
+}

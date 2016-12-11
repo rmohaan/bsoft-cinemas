@@ -20,6 +20,13 @@ export function fetchProductsList () {
   });
 }
 
+export function fetchMoQList () {
+  return axios({
+    method: 'get',
+    url: '/api/getMoQList'
+  });
+}
+
 export function submitOrder (items) {
   console.log("submitOrder from dataRequests", items);
   return axios({
