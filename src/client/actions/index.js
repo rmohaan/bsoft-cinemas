@@ -11,7 +11,7 @@ export function setData (data) {
   };
 }
 
-export function setMoQData (data) {
+export function setMoqData (data) {
   return {
     type: actionEvents.SET_MOQ_DATA,
     payload: data
@@ -77,12 +77,12 @@ export function submitCustomerInfo (items) {
   };
 }
 
-export function fetchMoQList () {
+export function fetchMoqList () {
   return function (dispatch) {
     // dispatch(fetchingData());
-    return dataRequests.fetchMoQList()
+    return dataRequests.fetchMoqList()
        .then(function (response) {
-         dispatch(setMoQData(response.data));
+         dispatch(setMoqData(response.data));
        });
   };
 }

@@ -20,10 +20,10 @@ export function fetchProductsList () {
   });
 }
 
-export function fetchMoQList () {
+export function fetchMoqList () {
   return axios({
     method: 'get',
-    url: '/api/getMoQList'
+    url: '/api/getMoqList'
   });
 }
 

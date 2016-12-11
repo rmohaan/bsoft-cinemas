@@ -44,7 +44,7 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
       });
   });
 
-  app.get('/api/getMoQList', (req, res) => {
+  app.get('/api/getMoqList', (req, res) => {
       db.collection('moq').find().toArray(function (err, results) {
           res.status(200).json(results);
           // send HTML file populated with quotes here
@@ -56,16 +56,15 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
     console.log("submitOrder", req.body)
     var data = req.body;
     var stocksUpdateData = data.stocks_update;
-    var MoQData= data.MoQ_update;
+    var moqData= data.moq_update;
     console.log(stocksUpdateData)
     delete data["stocks_update"];
-    delete data["MoQ_update"];
+    delete data["moq_update"];
       db.collection('orders').insert(data, function (err, results) {
           console.log(results);
           if (results.result.ok === 1) {
-            var stocksUpdateDataLength=stocksUpdateData.length;
-            var moqUpdateDataLength=MoQData.length;
-            var successfulCount=0;
+            var stocksUpdateDataLength=stocksUpdateData.length,moqUpdateDataLength=moqData.length,successfulCount=0;
+            console.log(moqUpdateDataLength)
             stocksUpdateData.map((item) => { 
               var id = item.Product_Code;
               delete item["Product_Code"];
@@ -78,25 +77,29 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
                   }
                    console.log(stocksUpdateDataLength + ":" + successfulCount)
                     if(successfulCount === stocksUpdateDataLength){
-                      var moqsuccessfulCount =0;
-                      MoQData.map((item) => { 
+                      var moqSuccessfulCount =0;
+                      if(moqUpdateDataLength >0){
+                      moqData.map((item) => { 
                         console.log("*********************************************************")
                         console.log(item)
                         delete item["_id"]
                         console.log("*********************************************************")
                         db.collection('moq').update({"Product_Code": item.Product_Code},{$set: item},{ upsert : true }, function (err, MoQResult) {
                             if (MoQResult.result.ok === 1) {
-                              moqsuccessfulCount +=1;   
+                              moqSuccessfulCount +=1;   
                             } else {
                               res.status(500).json({message:"Request Failed"});
                             }
-                            console.log(moqUpdateDataLength + " Moq :" + moqsuccessfulCount)
-                            if(moqsuccessfulCount === moqUpdateDataLength){
+                            console.log(moqUpdateDataLength + " Moq :" + moqSuccessfulCount)
+                            if(moqSuccessfulCount === moqUpdateDataLength){
                               console.log("success");
                               res.status(200).json(results);
                             }
                        });
-                      });  
+                      }); 
+                      }else{
+                        res.status(200).json(results);
+                      } 
                     }
               });
             });

@@ -89,20 +89,18 @@ class ProductsCheckout extends React.Component {
       console.log("submit button clicked", selectedItemList, totalAmount);
 
       console.log("list :" + this.props.list);
-      let products=this.props.list;
-      let stocksUpdate = [];
-      let MoQ = [];
-      for ( const arrValue of selectedItemList ) {
-            console.log( arrValue ); // 'hello', 'world'
+      let products=this.props.list,stocksUpdate = [], moqList= [];
+      for ( const selectedItem of selectedItemList ) {
+            console.log( selectedItem ); // 'hello', 'world'
             Object.keys(products).forEach(function (key) {
-              let productobj = products[key];
-              if(arrValue.Product_Code === productobj.Product_Code){
+              let productObj = products[key];
+              if(selectedItem.Product_Code === productObj.Product_Code){
                 var jsonData = {};
-                jsonData["Product_Code"] = arrValue.Product_Code;
-                jsonData["Availability"] = arrValue.Availability;
-                if(arrValue.Availability <= 5){
-                  productobj.Availability = arrValue.Availability;
-                  MoQ.push(productobj);
+                jsonData["Product_Code"] = selectedItem.Product_Code;
+                jsonData["Availability"] = selectedItem.Availability;
+                if(selectedItem.Availability <= 5){
+                  productObj.Availability = selectedItem.Availability;
+                  moqList.push(productObj);
                 }
                 stocksUpdate.push(jsonData)
               }
@@ -124,7 +122,7 @@ class ProductsCheckout extends React.Component {
      console.log(stocksUpdate);
       let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
       // console.log();
-      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate , MoQ_update: MoQ}));
+      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate , moq_update: moqList}));
   }
 
 render () {

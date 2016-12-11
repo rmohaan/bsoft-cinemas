@@ -65,7 +65,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(actions.fetchMoQList());
+    this.props.dispatch(actions.fetchMoqList());
   }
    _customFilterFunction (items, query) {
     console.log("items: ", items);
@@ -84,7 +84,7 @@ render () {
                   tableClassName="table table-hover" 
                   showFilter={true}
                   enableInfiniteScroll={true}
-                  resultsPerPage={5}
+                  resultsPerPage={10}
                   bodyHeight={500}
                   useFixedHeader={true}
                   columnMetadata={columnMetaData}
