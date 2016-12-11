@@ -155,7 +155,7 @@ render () {
         <div className="row">
           <div className="col-md-6">
              <Griddle results={this.props.list} 
-                  tableClassName="table table-hover" 
+                  tableClassName="table table-hover"
                   showFilter={true}
                   enableInfiniteScroll={true}
                   resultsPerPage={5}
@@ -167,7 +167,8 @@ render () {
                   useCustomFilterComponent={true} 
                   customFilterComponent={SearchBar} 
                   customFilterer={this.customFilterFunction} 
-                  onRowClick={this.updateRowChange}/>
+                  onRowClick={this.updateRowChange}
+                  noDataMessage={"Fetching data..."} />
           </div>
           <div className="col-md-6">
             <div style={{marginTop: '25px'}} >

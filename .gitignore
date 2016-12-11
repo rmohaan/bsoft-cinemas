@@ -33,6 +33,8 @@ dist
 *.build.js
 *.build.css
 
+public/build
+
 
 ### Example ###
 index.build.css

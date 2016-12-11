@@ -32,7 +32,9 @@ app.use(bodyParser.json());
 
 app.use(favicon(path.join(imagesDir, 'favicon.ico')));
 
-MongoClient.connect('mongodb://localhost:27017/fmcg', (err, database) => {
+// mongodb://localhost:27017/fmcg
+
+MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg', {uri_decode_auth: true}, (err, database) => {
   // ... start the server
   if (err) return console.log(err)
   db = database;
