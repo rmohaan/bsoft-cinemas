@@ -93,7 +93,7 @@ _updateRowChange (row, event) {
       item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
   if (!item) {
     let selectedNewItem=Object.assign({},row.props.data);
-    console.log(selectedNewItem.Availability -=1);
+    selectedNewItem.Availability -=1;
     exis.push({
       ...selectedNewItem,
       quantity: 1
