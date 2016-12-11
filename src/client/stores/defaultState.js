@@ -3,6 +3,7 @@
 let state = {
   productsList: [],
   selectedItems: [],
+  moqList: [],
   orderInfo: {}
 };
 

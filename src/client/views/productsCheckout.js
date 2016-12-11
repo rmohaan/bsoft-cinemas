@@ -84,21 +84,45 @@ class ProductsCheckout extends React.Component {
       return totalAmt;
   }
 
-  _submitAction (event, list, totalAmount) {
+  _submitAction (event, selectedItemList, totalAmount) {
       event.preventDefault();
-      console.log("submit button clicked", list, totalAmount);
-      list.map((item) => { 
+      console.log("submit button clicked", selectedItemList, totalAmount);
+
+      console.log("list :" + this.props.list);
+      let products=this.props.list,stocksUpdate = [], moqList= [];
+      for ( const selectedItem of selectedItemList ) {
+            console.log( selectedItem ); // 'hello', 'world'
+            Object.keys(products).forEach(function (key) {
+              let productObj = products[key];
+              if(selectedItem.Product_Code === productObj.Product_Code){
+                var jsonData = {};
+                jsonData["Product_Code"] = selectedItem.Product_Code;
+                jsonData["Availability"] = selectedItem.Availability;
+                if(selectedItem.Availability <= 5){
+                  productObj.Availability = selectedItem.Availability;
+                  moqList.push(productObj);
+                }
+                stocksUpdate.push(jsonData)
+              }
+
+            });
+      }
+      selectedItemList.map((item) => { 
           delete item.Product_Name; 
           delete item.Quantity;
           delete item._id;
           delete item.Availability;
           delete item.Price;
         });
+
+      
+
+
      // let toInsert = {{Product_Code, quantity, Price}, ...list};
-      console.log(list);
-      let toInsert = [...list]; //{...list, totalAmount: totalAmount};
+     console.log(stocksUpdate);
+      let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
       // console.log();
-      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount}));
+      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate , moq_update: moqList}));
   }
 
 render () {
@@ -132,6 +156,7 @@ render () {
 
 function select (state) {
   return {
+    list: state.productsList,
     selectedItems: state.selectedItems
   };
 }

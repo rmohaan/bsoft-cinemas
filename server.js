@@ -32,9 +32,8 @@ app.use(bodyParser.json());
 
 app.use(favicon(path.join(imagesDir, 'favicon.ico')));
 
-// mongodb://localhost:27017/fmcg
-
 MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg', {uri_decode_auth: true}, (err, database) => {
+
   // ... start the server
   if (err) return console.log(err)
   db = database;
@@ -46,12 +45,66 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
       });
   });
 
+  app.get('/api/getMoqList', (req, res) => {
+      db.collection('moq').find().toArray(function (err, results) {
+          res.status(200).json(results);
+          // send HTML file populated with quotes here
+      });
+  });
+
   app.put('/api/submitOrder', (req, res) => {
+    console.log("data")
     console.log("submitOrder", req.body)
-      db.collection('orders').insert(req.body, function (err, results) {
+    var data = req.body;
+    var stocksUpdateData = data.stocks_update;
+    var moqData= data.moq_update;
+    console.log(stocksUpdateData)
+    delete data["stocks_update"];
+    delete data["moq_update"];
+      db.collection('orders').insert(data, function (err, results) {
           console.log(results);
           if (results.result.ok === 1) {
-            res.status(200).json(results);
+            var stocksUpdateDataLength=stocksUpdateData.length,moqUpdateDataLength=moqData.length,successfulCount=0;
+            console.log(moqUpdateDataLength)
+            stocksUpdateData.map((item) => { 
+              var id = item.Product_Code;
+              delete item["Product_Code"];
+               console.log("testing" + item)
+              db.collection('stocks').updateOne({"Product_Code" : id},{$set: item}, function (err, updateResult) {
+                  if (updateResult.result.ok === 1) {
+                   successfulCount +=1;
+                  } else {
+                    res.status(500).json({message:"Request Failed"});
+                  }
+                   console.log(stocksUpdateDataLength + ":" + successfulCount)
+                    if(successfulCount === stocksUpdateDataLength){
+                      var moqSuccessfulCount =0;
+                      if(moqUpdateDataLength >0){
+                      moqData.map((item) => { 
+                        console.log("*********************************************************")
+                        console.log(item)
+                        delete item["_id"]
+                        console.log("*********************************************************")
+                        db.collection('moq').update({"Product_Code": item.Product_Code},{$set: item},{ upsert : true }, function (err, MoQResult) {
+                            if (MoQResult.result.ok === 1) {
+                              moqSuccessfulCount +=1;   
+                            } else {
+                              res.status(500).json({message:"Request Failed"});
+                            }
+                            console.log(moqUpdateDataLength + " Moq :" + moqSuccessfulCount)
+                            if(moqSuccessfulCount === moqUpdateDataLength){
+                              console.log("success");
+                              res.status(200).json(results);
+                            }
+                       });
+                      }); 
+                      }else{
+                        res.status(200).json(results);
+                      } 
+                    }
+              });
+            });
+
           } else {
             res.status(500).json({message:"Request Failed"});
           }
@@ -69,6 +122,7 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
           }
       });
   });
+  
 
   app.use((req, res, next) => {
       console.log(req.url);
