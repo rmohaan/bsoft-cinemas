@@ -34,7 +34,7 @@ render () {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">FMCG</a>
+              <a className="navbar-brand" href="/">FMCG</a>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">

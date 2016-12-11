@@ -125,3 +125,13 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.stockStatusAvailable {
+  color: seagreen;
+  margin-left: 25px;
+}
+
+.stockStatusNotAvailable {
+  color: firebrick;
+  margin-left: 25px;
+}

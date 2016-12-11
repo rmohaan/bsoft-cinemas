@@ -83,6 +83,24 @@ render () {
                         </div>
                     </div>
                     <div className="form-group row">
+                    <label htmlFor="inputAge" className="col-sm-2 col-form-label">Age </label>
+                        <div className="col-sm-10">
+                            <input type="number" className="form-control" id="inputAge" placeholder="Enter the age" value="Not applicable" readOnly/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                    <label htmlFor="inputGender" className="col-sm-2 col-form-label">Gender </label>
+                        <div className="col-sm-10">
+                            <input type="text" className="form-control" id="inputGender" placeholder="Enter the gender" value="Not applicable" readOnly/>
+                        </div>
+                    </div>
+                     <div className="form-group row">
+                    <label htmlFor="inputMarital" className="col-sm-2 col-form-label">Marital Status </label>
+                        <div className="col-sm-10">
+                            <input type="text" className="form-control" id="inputMarital" placeholder="Enter the marital status" value="Not applicable" readOnly/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
                     <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email</label>
                         <div className="col-sm-10">
                             <input type="email" className="form-control" id="inputEmail" placeholder="Enter the email id" value="Not applicable" readOnly/>

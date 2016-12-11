@@ -9,6 +9,7 @@ import { push } from 'react-router-redux';
 import Header from './header';
 import Griddle from 'griddle-react';
 import SearchBar from './searchBar';
+import RowRender from './rowRender';
 import * as actions from '../actions';
 
 var columnMetaData = [{
@@ -67,6 +68,9 @@ class ProductsList extends React.Component {
     this.updateRowChange = (row, event) => this._updateRowChange (row, event); 
     this.updateRowChange2 = (row, event) => this._updateRowChange2 (row, event);
     this.setSelectedItems = (items, event) => this._setSelectedItems (items, event);
+    this.generateModifiedList = (list) => this._generateModifiedList(list);
+    this.addOneItem = (event, data) => this._addOneItem(event, data);
+    this.reduceOneItem = (event, data) => this._reduceOneItem(event, data);
     this.selectedItems = [];
   }
 
@@ -92,15 +96,19 @@ _updateRowChange (row, event) {
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
   if (!item) {
-    let selectedNewItem=Object.assign({},row.props.data);
-    selectedNewItem.Availability -=1;
-    exis.push({
-      ...selectedNewItem,
-      quantity: 1
-    });
+    let selectedNewItem=Object.assign({}, row.props.data);
+    if (selectedNewItem.Availability > 0) {
+      selectedNewItem.Availability -= 1;
+      exis.push({
+        ...selectedNewItem,
+        quantity: 1
+      });
+    } else {
+      alert ("Item not in stock!");
+    }
         // row.props.data.Availability -= 1;
   } else {
-    if (item.Availability > 1) {
+    if (item.Availability > 0) {
       // row.props.data.Availability -= 1;
       item.Availability -= 1;
       item.quantity += 1;
@@ -139,7 +147,7 @@ _updateRowChange2 (row, event) {
       
   this.setState ({
     selectedItems: exis
-  })
+  });
 }
 
 _setSelectedItems (items, event) {
@@ -150,9 +158,44 @@ _setSelectedItems (items, event) {
 
 }
 
+_addOneItem (event, data) {
+  console.log("addOneItem", event, data);
+  let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
+      item = newState.find((item) => item.Product_Code === data.Product_Code);
+  
+  if (item.Availability > 0) {
+      item.Availability -= 1;
+      item.quantity += 1;
+    } else {
+      alert ("Item out of stock!");
+    }
+
+  this.setState ({
+    selectedItems: newState
+  });
+}
+
+_reduceOneItem (event, data) {
+  console.log("reduceOneItem", event, data);
+  let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
+      item = newState.find((item) => item.Product_Code === data.Product_Code);
+
+  if (item.quantity > 1) {
+      item.Availability += 1;
+      item.quantity -= 1;
+    } else {
+      var indexToRemove = newState.findIndex((item) => {
+        return item.Product_Code === data.Product_Code;
+      });
+      newState.splice(indexToRemove, 1);
+    }
+  this.setState ({
+    selectedItems: newState
+  });
+}
+
 render () {
-    console.log(this);
-    
+    let isDisabled = this.state.selectedItems.length > 0 ? false : true;
     return (
       <div className="container-fluid">
         <div className="row">
@@ -176,17 +219,8 @@ render () {
           <div className="col-md-6">
             <div style={{marginTop: '25px'}} >
               <strong> <i> Items to checkout </i> </strong>
-              <Griddle results={this.state.selectedItems} 
-                      tableClassName="active" 
-                      enableInfiniteScroll={true}
-                      bodyHeight={500}
-                      useFixedHeader={true}
-                      columnMetadata={columnMetaData}
-                      columns={["Product_Name", "Quantity", "Price", "quantity"]}
-                      filterPlaceholderText="Search Item Code" 
-                      onRowClick={this.updateRowChange2}
-                      noDataMessage={"Select Items from the left pane to start purchasing"} />
-                <a className="btn btn-success" style={{float: 'right', marginTop: '5px'}} onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}>Checkout</a> 
+              <RowRender data={this.state.selectedItems} addOneItem={this.addOneItem} reduceOneItem={this.reduceOneItem} />
+              <a className="btn btn-success" style={{float: 'right', marginTop: '5px'}} onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)} disabled={isDisabled}>Checkout</a> 
             </div>
         </div>
       </div>
