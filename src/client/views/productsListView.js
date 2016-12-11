@@ -92,16 +92,13 @@ _updateRowChange (row, event) {
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
   if (!item) {
+    let selectedNewItem=Object.assign({},row.props.data);
+    console.log(selectedNewItem.Availability -=1);
     exis.push({
-      ...row.props.data,
+      ...selectedNewItem,
       quantity: 1
     });
-    for ( const arrValue of exis ) {
-      if(arrValue.Product_Code === row.props.data.Product_Code){
-        arrValue.Availability -=1;
-      }
-    }
-    // row.props.data.Availability -= 1;
+        // row.props.data.Availability -= 1;
   } else {
     if (item.Availability > 1) {
       // row.props.data.Availability -= 1;
