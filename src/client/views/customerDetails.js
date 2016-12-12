@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Header from './header';
+import Footer from './footer';
 import * as actions from '../actions';
 
 class CustomerInfo extends React.Component {
@@ -143,7 +144,8 @@ render () {
                     </div>
               </div>
           </div>
-      </div>
+         </div>
+       <Footer />
       </div>
     );
   }

@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Header from './header';
+import Footer from './footer';
 import Griddle from 'griddle-react';
 import * as actions from '../actions';
 
@@ -53,80 +54,65 @@ var columnMetaData = [{
   }];
 
 class ProductsCheckout extends React.Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       selectedItems: []
     };
-    String.prototype.capitalize = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
+    String.prototype.capitalize = function () {
+      return this.charAt(0).toUpperCase() + this.slice(1);
     };
     this.selectedItems = [];
-    this.updateRowChange2 = (row, event) => this._updateRowChange2 (row, event);
-    this.modifiedList = (items) => this._modifiedList (items);
-    this.getTotalAmount = (items) => this._getTotalAmount (items);
-    this.submitAction = (event, list, totalAmount) => this._submitAction (event, list, totalAmount);
+    this.updateRowChange2 = (row, event) => this._updateRowChange2(row, event);
+    this.modifiedList = (items) => this._modifiedList(items);
+    this.getTotalAmount = (items) => this._getTotalAmount(items);
+    this.submitAction = (event, list, totalAmount) => this._submitAction(event, list, totalAmount);
   }
 
-  componentDidMount () {
-      // this.props.dispatch(actions.fetchSelectedProducts());
+  _modifiedList(items) {
+    items.map((item) => { item.Total = item.Price * item.quantity; });
+    return items;
   }
 
-  _modifiedList (items) {
-      items.map((item) => { item.Total = item.Price * item.quantity; });
-      return items;
+  _getTotalAmount(items) {
+    let totalAmt = 0;
+    items.map((item) => { totalAmt += item.Price * item.quantity; });
+    console.log(totalAmt);
+    return totalAmt;
   }
 
-  _getTotalAmount (items) {
-      let totalAmt = 0;
-      items.map((item) => { totalAmt += item.Price * item.quantity; });
-      console.log(totalAmt);
-      return totalAmt;
-  }
+  _submitAction(event, selectedItemList, totalAmount) {
+    event.preventDefault();
+    let products = this.props.list, stocksUpdate = [], moqList = [];
+    for (const selectedItem of selectedItemList) {
+      Object.keys(products).forEach(function (key) {
+        let productObj = products[key];
+        if (selectedItem.Product_Code === productObj.Product_Code) {
+          var jsonData = {};
+          jsonData["Product_Code"] = selectedItem.Product_Code;
+          jsonData["Availability"] = selectedItem.Availability;
+          if (selectedItem.Availability <= 5) {
+            productObj.Availability = selectedItem.Availability;
+            moqList.push(productObj);
+          }
+          stocksUpdate.push(jsonData)
+        }
 
-  _submitAction (event, selectedItemList, totalAmount) {
-      event.preventDefault();
-      console.log("submit button clicked", selectedItemList, totalAmount);
+      });
+    }
+    selectedItemList.map((item) => {
+      delete item.Product_Name;
+      delete item.Quantity;
+      delete item._id;
+      delete item.Availability;
+      delete item.Price;
+    });
 
-      console.log("list :" + this.props.list);
-      let products=this.props.list,stocksUpdate = [], moqList= [];
-      for ( const selectedItem of selectedItemList ) {
-            console.log( selectedItem ); // 'hello', 'world'
-            Object.keys(products).forEach(function (key) {
-              let productObj = products[key];
-              if(selectedItem.Product_Code === productObj.Product_Code){
-                var jsonData = {};
-                jsonData["Product_Code"] = selectedItem.Product_Code;
-                jsonData["Availability"] = selectedItem.Availability;
-                if(selectedItem.Availability <= 5){
-                  productObj.Availability = selectedItem.Availability;
-                  moqList.push(productObj);
-                }
-                stocksUpdate.push(jsonData)
-              }
-
-            });
-      }
-      selectedItemList.map((item) => { 
-          delete item.Product_Name; 
-          delete item.Quantity;
-          delete item._id;
-          delete item.Availability;
-          delete item.Price;
-        });
-
-      
-
-
-     // let toInsert = {{Product_Code, quantity, Price}, ...list};
-     console.log(stocksUpdate);
-      let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
-      // console.log();
-      this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate , moq_update: moqList}));
-  }
+    let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
+    this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate, moq_update: moqList}));
+}
 
 render () {
-    console.log(this.props.selectedItems.items);
     let list = this.modifiedList(this.props.selectedItems.items),
         showTotalAmount = this.getTotalAmount(list);
     return (
@@ -148,13 +134,14 @@ render () {
                 <div className="panel-body" style={{marginLeft: '48px'}}><button className="btn btn-success" onClick={(event) => this.submitAction(event, list, showTotalAmount)}>Submit</button></div>
             </div>
           </div>
-      </div>
+         </div>
+       <Footer />
       </div>
     );
   }
 }
 
-function select (state) {
+function select(state) {
   return {
     list: state.productsList,
     selectedItems: state.selectedItems

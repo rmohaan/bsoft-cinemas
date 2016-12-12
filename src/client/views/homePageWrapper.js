@@ -5,6 +5,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './header';
+import Footer from './footer';
 import SideBar from './sideBar';
 import Dashboard from './dashBoard';
 
@@ -36,6 +37,7 @@ render () {
              </div>
            </div>
          </div>
+         <Footer />
       </div>
     );
   }

@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Header from './header';
+import Footer from './footer';
 import ProductsList from './productsListView';
 import * as actions from '../actions/index';
 
@@ -31,6 +32,7 @@ render () {
       <div className="">
         <Header />
         <ProductsList />
+        <Footer />
       </div>
     );
   }
