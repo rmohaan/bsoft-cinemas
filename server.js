@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 var path = require('path');
 var favicon = require('serve-favicon');
 var routes = require('./routes');
-// var logger = require('morgan');
+var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 const MongoClient = require('mongodb').MongoClient;
 var app = express(),
@@ -16,6 +16,7 @@ var app = express(),
 var db;
 
 // CORS
+app.use(logger('dev'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
