@@ -77,7 +77,7 @@ render () {
                     <div className="form-group row">
                     <label htmlFor="inputAge" className="col-sm-2 col-form-label">Age </label>
                         <div className="col-sm-10">
-                            <input type="number" className="form-control" id="inputAge" placeholder="Enter the age" value="Not applicable" readOnly/>
+                            <input type="number" className="form-control" id="inputAge" placeholder="Enter the age" value={0} readOnly/>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -95,7 +95,7 @@ render () {
                     <div className="form-group row">
                     <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email</label>
                         <div className="col-sm-10">
-                            <input type="email" className="form-control" id="inputEmail" placeholder="Enter the email id" value="Not applicable" readOnly/>
+                            <input type="email" className="form-control" id="inputEmail" placeholder="Enter the email id" value="admin@nearme.com" readOnly/>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -125,7 +125,7 @@ render () {
                     <div className="form-group row">
                     <label htmlFor="inputAddressPincode" className="col-sm-2 col-form-label">Pincode </label>
                         <div className="col-sm-10">
-                            <input type="number" className="form-control" id="inputAddressPincode" placeholder="Enter the pincode" value="Not applicable" readOnly/>
+                            <input type="number" className="form-control" id="inputAddressPincode" placeholder="Enter the pincode" value={600001} readOnly/>
                         </div>
                     </div>
                     <div className="form-group row" style={{float: 'right'}}>

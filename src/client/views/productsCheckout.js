@@ -7,51 +7,8 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Header from './header';
 import Footer from './footer';
-import Griddle from 'griddle-react';
+import RowRender from './rowRender';
 import * as actions from '../actions';
-
-var columnMetaData = [{
-    "columnName": "Product_Code",
-    "order": 1,
-    "locked": false,
-    "visible": true,
-    "displayName": "Code"
-  },
-  {
-    "columnName": "Product_Name",
-    "order": 2,
-    "locked": false,
-    "visible": true,
-    "displayName": "Name"
-  },
-  {
-    "columnName": "Quantity",
-    "order": 3,
-    "locked": false,
-    "visible": true,
-    "displayName": "Unit"
-  },
-  {
-    "columnName": "quantity",
-    "order": 4,
-    "locked": false,
-    "visible": true,
-    "displayName": "Quantity"
-  },
-  {
-    "columnName": "Price",
-    "order": 5,
-    "locked": false,
-    "visible": true,
-    "displayName": "Price"
-  },
-  {
-    "columnName": "Total",
-    "order": 6,
-    "locked": false,
-    "visible": true,
-    "displayName": "Total Price"
-  }];
 
 class ProductsCheckout extends React.Component {
   constructor() {
@@ -63,7 +20,6 @@ class ProductsCheckout extends React.Component {
     String.prototype.capitalize = function () {
       return this.charAt(0).toUpperCase() + this.slice(1);
     };
-    this.selectedItems = [];
     this.handlePhoneNumber = (event) => this._handlePhoneNumber(event);
     this.updateRowChange2 = (row, event) => this._updateRowChange2(row, event);
     this.modifiedList = (items) => this._modifiedList(items);
@@ -79,7 +35,6 @@ class ProductsCheckout extends React.Component {
   _getTotalAmount(items) {
     let totalAmt = 0;
     items.map((item) => { totalAmt += item.Price * item.quantity; });
-    console.log(totalAmt);
     return totalAmt;
   }
 
@@ -116,7 +71,13 @@ class ProductsCheckout extends React.Component {
     });
 
      let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
-     this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, customerId: phoneNumber, stocks_update: stocksUpdate, moq_update: moqList}));
+     this.props.dispatch(actions.submitOrder({
+       ...toInsert,
+       totalAmount: totalAmount,
+       customerId: phoneNumber,
+       stocks_update: stocksUpdate,
+       moq_update: moqList
+      }));
     } else {
       alert ("Phone number is mandatory");
     }
@@ -130,24 +91,19 @@ _handlePhoneNumber (event) {
 }
 
 render () {
+
     let list = this.modifiedList(this.props.selectedItems.items),
         showTotalAmount = this.getTotalAmount(list);
 
-    console.log("list from productcheckoutjs", list);
     return (
-       
       <div className="container-fluid">
        <Header />
         <div className="row">
           <div className="col-md-12" style={{ marginTop:'5px'}}>
-             <Griddle results={list} 
-                  tableClassName="table table-hover" 
-                  enableInfiniteScroll={true}
-                  resultsPerPage={10}
-                  columnMetadata={columnMetaData}
-                  columns={["Product_Code", "Product_Name", "Quantity", "quantity", "Price", "Total"]} />
-
-            <div style={{ marginTop:'5px'}} className="panel panel-default checkout">
+           <RowRender data={list}
+                      cols={['Product_Code', 'Product_Name', 'Quantity', 'quantity', 'Price', 'Total']}
+                      forCheckout={true} />
+           <div style={{ marginTop:'5px'}} className="panel panel-default checkout">
                 <div className="panel-heading">
                   <label className="col-form-label"> Enter Customer phone number </label>
                   <span style={{float: 'right'}}>
