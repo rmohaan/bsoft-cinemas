@@ -9,6 +9,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import store from './stores/index';
 import "./stylesheets/main.scss";
 
+import Login from './views/login';
 import HomePageWrapper from './views/homePageWrapper';
 import ProductSearch from './views/productSearchWrapper';
 import ProductsCheckout from './views/productsCheckout';
@@ -31,7 +32,8 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={HomePageWrapper}/>
+        <IndexRoute component={Login}/>
+        <Route path='/moq' component={HomePageWrapper} />
         <Route path='/purchase' component={ProductSearch} />
         <Route path='/checkout' component={ProductsCheckout} />
         <Route path='/customer' component={CustomerInfo} />

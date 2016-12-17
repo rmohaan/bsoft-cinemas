@@ -6,7 +6,7 @@ export function productsList (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);
 
-  if (actionType === actionEvents.SET_DATA) {
+  if (actionType === actionEvents.SET_PRODUCTS_LIST) {
     newState = action.payload;
   }
 
@@ -40,6 +40,17 @@ export function moqList (state, action) {
       newState = Object.assign({}, state);
 
   if (actionType === actionEvents.SET_MOQ_DATA) {
+    newState = action.payload;
+  }
+
+  return newState;
+}
+
+export function authenticationDetails (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_AUTHENTICATION_DETAILS) {
     newState = action.payload;
   }
 

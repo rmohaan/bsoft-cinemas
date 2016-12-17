@@ -5,6 +5,17 @@ var favicon = require('serve-favicon');
 var routes = require('./routes');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+var flash    = require('connect-flash');
+var mongoose = require('mongoose');
+var port = process.env.PORT || 4000;
+
+var dbData = require('./config/database.js');
+
+var configDB = dbData.prod;
+mongoose.connect(configDB.url, {user: configDB.userName, pwd: configDB.password}); 
+
 const MongoClient = require('mongodb').MongoClient;
 var app = express(),
   dir = __dirname,
@@ -33,6 +44,31 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(favicon(path.join(imagesDir, 'favicon.ico')));
+
+// required for passport
+app.use(session({ secret: configDB.secret})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+require('./config/passport')(passport);
+
+function isLoggedIn(req, res, next) {
+  console.log(req.isAuthenticated());
+    // if user is authenticated in the session, carry on 
+    if (req.isAuthenticated()) {
+      return next();
+    } else {
+      console.log("res", req.user);
+       // if they aren't redirect them to the home page
+      res.status(403).send('failed authentication');
+    }
+        
+
+    
+}
+
 // mongodb://localhost:27017/fmcg
 MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg', {
   uri_decode_auth: true
@@ -42,9 +78,42 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
   if (err) return console.log(err)
   db = database;
 
-  app.get('/api/getProductsList', (req, res) => routes.getProductsList(req, res, db));
+  app.get ('/', (req, res, next) => {
+    res.sendFile(path.join(publicDir, 'index.html'));
+  });
 
-  app.get('/api/getMoqList', (req, res) => routes.getMoqList (req, res, db));
+ app.post('/api/login', function (req, res, next) {
+    passport.authenticate('local-login', function (err, user, info) {
+        if (err) {
+          return next(err); // will generate a 500 error
+        }
+
+        // Generate a JSON response reflecting authentication status
+        if (!user) {
+          return res.send({isAuthenticationSuccess: false, authenticationMessage: 'authentication failed'});
+        }
+
+        req.login(user, loginErr => {
+          if (loginErr) {
+            return next(loginErr);
+          }
+
+          return res.send({
+            userRole: user.userRole,
+            isAuthenticationSuccess: true,
+            authenticationMessage: 'authentication successful'
+          });
+        });
+      })(req, res, next);
+  });
+
+  app.get('/api/getProductsList',
+          isLoggedIn,
+          (req, res) => routes.getProductsList(req, res, db));
+
+  app.get('/api/getMoqList',
+          isLoggedIn,
+          (req, res) => routes.getMoqList (req, res, db));
 
   app.put('/api/submitOrder', (req, res) => routes.submitOrder(req, res, db));
 
@@ -54,11 +123,8 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
     res.sendFile(path.join(publicDir, 'index.html'));
   });
 
-  app.listen(4000, () => {
-    console.log('listening on 4000')
+  app.listen(port, () => {
+    console.log('listening on', port)
   });
 });
 
-module.exports = {
-  db
-};

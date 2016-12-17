@@ -4,7 +4,12 @@ let state = {
   productsList: [],
   selectedItems: [],
   moqList: [],
-  orderInfo: {}
+  orderInfo: {},
+  authenticationDetails: {
+    authenticationMessage: '',
+    isAuthenticationSuccess: true,
+    userRole: ''
+  }
 };
 
 export default state;

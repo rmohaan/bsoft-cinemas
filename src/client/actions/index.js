@@ -4,9 +4,9 @@ import * as actionEvents from './events';
 import * as dataRequests from './dataRequests';
 import { push } from 'react-router-redux';
 
-export function setData (data) {
+export function setProductsList (data) {
   return {
-    type: actionEvents.SET_DATA,
+    type: actionEvents.SET_PRODUCTS_LIST,
     payload: data
   };
 }
@@ -39,12 +39,24 @@ export function setCustomerInfo (data) {
   };
 }
 
+export function setAuthenticationDetails (data) {
+  return {
+    type: actionEvents.SET_AUTHENTICATION_DETAILS,
+    payload: data
+  };
+}
+
 export function fetchProductsList () {
   return function (dispatch) {
     // dispatch(fetchingData());
     return dataRequests.fetchProductsList()
        .then(function (response) {
-         dispatch(setData(response.data));
+         if (response.status === 200) {
+           dispatch(setProductsList(response.data));
+         }
+       })
+       .catch((err) => {
+          dispatch(push('/'))
        });
   };
 }
@@ -54,11 +66,13 @@ export function submitOrder (items) {
     // dispatch(fetchingData());
     return dataRequests.submitOrder(items)
        .then(function (response) {
-         console.log("submitOrder in actions", response);
          if (response.status === 200) {
            dispatch(setOrderInfo({orderId: response.data.insertedIds[0], totalAmount: items.totalAmount}));
            dispatch(push('/customer'));
          }
+       })
+       .catch((err) => {
+          console.log(err);
        });
   };
 }
@@ -68,12 +82,14 @@ export function submitCustomerInfo (items) {
     // dispatch(fetchingData());
     return dataRequests.submitCustomerInfo(items)
        .then(function (response) {
-         console.log("submitCustomerInfo in actions", response);
          if (response.status === 200) {
            // dispatch(setCustomerInfo());
            dispatch(push('/'));
          }
-       });
+       })
+       .catch((err) => {
+         console.log(err);
+       }) ;
   };
 }
 
@@ -83,6 +99,24 @@ export function fetchMoqList () {
     return dataRequests.fetchMoqList()
        .then(function (response) {
          dispatch(setMoqData(response.data));
+       })
+       .catch((err) => {
+          dispatch(push('/'))
+       });
+  };
+}
+
+export function authenticateUser (userData) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.authenticateUser(userData)
+       .then(function (response) {
+         // dispatch(setAuthenticationDetails(response.data));
+          if(response.data.isAuthenticationSuccess && response.data.userRole === 'executive') {
+            dispatch(push('/purchase'));
+          } else if (response.data.isAuthenticationSuccess && response.data.userRole === 'admin') {
+            dispatch(push('/moq'));
+          }
        });
   };
 }

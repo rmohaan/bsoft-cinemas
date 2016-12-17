@@ -28,7 +28,6 @@ export function fetchMoqList () {
 }
 
 export function submitOrder (items) {
-  console.log("submitOrder from dataRequests", items);
   return axios({
     method: 'put',
     url: '/api/submitOrder',
@@ -37,10 +36,17 @@ export function submitOrder (items) {
 }
 
 export function submitCustomerInfo (items) {
-  console.log("submitCustomerInfo from dataRequests", items);
   return axios({
     method: 'put',
     url: '/api/submitCustomerInfo',
     data: items
+  });
+}
+
+export function authenticateUser (userData) {
+  return axios({
+    method: 'post',
+    url: '/api/login',
+    data: userData
   });
 }
