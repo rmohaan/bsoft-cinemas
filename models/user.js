@@ -1,3 +1,11 @@
+
+/***************************************
+ * 
+ * 
+ * Currently we are not using this model and mongoose also
+ * 
+ * **************************************/
+
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
