@@ -14,8 +14,6 @@ constructor ()  {
 }
 
 _generateRows (list) {
-  console.log("generateRows",this);
-
   let cols = ['Product_Code', 'Product_Name', 'quantity', 'StockStatus'],
       thisRef = this;
 
@@ -49,10 +47,8 @@ _generateRows (list) {
 }
 
 render () {
-    console.log(this.props);
     let list = this.props.data.length > 0 ? this.generateRows(this.props.data) : this.props.data;
        
-
     return (
       <div>
         <table className="table table-success">

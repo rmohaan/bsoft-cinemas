@@ -67,7 +67,7 @@ export function submitOrder (items) {
     return dataRequests.submitOrder(items)
        .then(function (response) {
          if (response.status === 200) {
-           dispatch(setOrderInfo({orderId: response.data.insertedIds[0], totalAmount: items.totalAmount}));
+           dispatch(setOrderInfo({orderId: response.data.insertedIds[0], totalAmount: items.totalAmount, customerId: items.customerId}));
            dispatch(push('/customer'));
          }
        })
@@ -84,7 +84,7 @@ export function submitCustomerInfo (items) {
        .then(function (response) {
          if (response.status === 200) {
            // dispatch(setCustomerInfo());
-           dispatch(push('/'));
+           dispatch(push('/purchase'));
          }
        })
        .catch((err) => {

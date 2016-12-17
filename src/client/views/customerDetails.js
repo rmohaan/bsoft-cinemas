@@ -16,12 +16,10 @@ class CustomerInfo extends React.Component {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
     this.state = {
-        name: '',
-        phone: ''
+        name: ''
     };
 
     this.handleNameChange = (event) =>  this._handleNameChange(event);
-    this.handlePhoneChange = (event) =>  this._handlePhoneChange(event);
     this.submitCustomerInfo = (event) => this._submitCustomerInfo(event);
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -32,22 +30,15 @@ class CustomerInfo extends React.Component {
     });
   }
 
-  _handlePhoneChange(event) {
-    this.setState({
-        phone: event.target.value
-    });
-  }
-
   _submitCustomerInfo (event) {
     alert('Customer Info submitted');
     event.preventDefault();
     let customerData = {
         name: this.state.name, 
-        phone: this.state.phone, 
+        customerId: this.props.orderInfo.customerId, 
         orderId: this.props.orderInfo.orderId, 
         totalAmount: this.props.orderInfo.totalAmount
     };
-    console.log(customerData);
     this.props.dispatch(actions.submitCustomerInfo(customerData));
   }
 
@@ -79,8 +70,8 @@ render () {
                                     className="form-control" 
                                     id="inputPhone" 
                                     placeholder="Enter the phone number" 
-                                    value={this.state.phone}
-                                    onChange={this.handlePhoneChange} />
+                                    value={this.props.orderInfo.customerId}
+                                    readOnly />
                         </div>
                     </div>
                     <div className="form-group row">

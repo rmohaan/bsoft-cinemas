@@ -57,12 +57,14 @@ class ProductsCheckout extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedItems: []
+      selectedItems: [],
+      phoneNumber: ''
     };
     String.prototype.capitalize = function () {
       return this.charAt(0).toUpperCase() + this.slice(1);
     };
     this.selectedItems = [];
+    this.handlePhoneNumber = (event) => this._handlePhoneNumber(event);
     this.updateRowChange2 = (row, event) => this._updateRowChange2(row, event);
     this.modifiedList = (items) => this._modifiedList(items);
     this.getTotalAmount = (items) => this._getTotalAmount(items);
@@ -83,8 +85,13 @@ class ProductsCheckout extends React.Component {
 
   _submitAction(event, selectedItemList, totalAmount) {
     event.preventDefault();
-    let products = this.props.list, stocksUpdate = [], moqList = [];
-    for (const selectedItem of selectedItemList) {
+    let products = this.props.list,
+        stocksUpdate = [],
+        moqList = [],
+        phoneNumber = this.state.phoneNumber;
+
+    if (phoneNumber) {
+      for (const selectedItem of selectedItemList) {
       Object.keys(products).forEach(function (key) {
         let productObj = products[key];
         if (selectedItem.Product_Code === productObj.Product_Code) {
@@ -108,30 +115,56 @@ class ProductsCheckout extends React.Component {
       delete item.Price;
     });
 
-    let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
-    this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, stocks_update: stocksUpdate, moq_update: moqList}));
+     let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
+     this.props.dispatch(actions.submitOrder({...toInsert, totalAmount: totalAmount, customerId: phoneNumber, stocks_update: stocksUpdate, moq_update: moqList}));
+    } else {
+      alert ("Phone number is mandatory");
+    }
+    
+}
+
+_handlePhoneNumber (event) {
+  this.setState({
+    phoneNumber: event.target.value
+  })
 }
 
 render () {
     let list = this.modifiedList(this.props.selectedItems.items),
         showTotalAmount = this.getTotalAmount(list);
+
+    console.log("list from productcheckoutjs", list);
     return (
        
       <div className="container-fluid">
        <Header />
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12" style={{ marginTop:'5px'}}>
              <Griddle results={list} 
                   tableClassName="table table-hover" 
                   enableInfiniteScroll={true}
                   resultsPerPage={10}
-                  useFixedHeader={true}
                   columnMetadata={columnMetaData}
                   columns={["Product_Code", "Product_Name", "Quantity", "quantity", "Price", "Total"]} />
 
-            <div style={{float:'right', width:'200px', marginTop:'5px'}} className="panel panel-default">
-                <div className="panel-heading">Total Amount Rs. {showTotalAmount}</div>
-                <div className="panel-body" style={{marginLeft: '48px'}}><button className="btn btn-success" onClick={(event) => this.submitAction(event, list, showTotalAmount)}>Submit</button></div>
+            <div style={{ marginTop:'5px'}} className="panel panel-default checkout">
+                <div className="panel-heading">
+                  <label className="col-form-label"> Enter Customer phone number </label>
+                  <span style={{float: 'right'}}>
+                    Total Amount Rs. {showTotalAmount}
+                  </span>
+                </div>
+                <div className="panel-body" style={{marginLeft: '48px'}}>
+                  <input type="text"
+                        className="form-control"
+                        value={this.state.phoneNumber}
+                        onChange={(event) => this.handlePhoneNumber(event)}  />
+                  <button className="btn btn-success"
+                          style={{marginTop: '5px', float: 'right'}}
+                          onClick={(event) => this.submitAction(event, list, showTotalAmount)} >
+                    Submit
+                  </button>
+                </div>
             </div>
           </div>
          </div>

@@ -159,7 +159,6 @@ _setSelectedItems (items, event) {
 }
 
 _addOneItem (event, data) {
-  console.log("addOneItem", event, data);
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = newState.find((item) => item.Product_Code === data.Product_Code);
   
@@ -176,7 +175,6 @@ _addOneItem (event, data) {
 }
 
 _reduceOneItem (event, data) {
-  console.log("reduceOneItem", event, data);
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = newState.find((item) => item.Product_Code === data.Product_Code);
 
@@ -220,7 +218,12 @@ render () {
             <div style={{marginTop: '25px'}} >
               <strong> <i> Items to checkout </i> </strong>
               <RowRender data={this.state.selectedItems} addOneItem={this.addOneItem} reduceOneItem={this.reduceOneItem} />
-              <a className="btn btn-success" style={{float: 'right', marginTop: '5px'}} onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)} disabled={isDisabled}>Checkout</a> 
+              <button className="btn btn-success"
+                  style={{float: 'right', marginTop: '5px'}}
+                  onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}
+                  disabled={isDisabled} >
+                  Checkout
+              </button> 
             </div>
         </div>
       </div>
