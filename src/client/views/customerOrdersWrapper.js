@@ -11,22 +11,17 @@ import CustomerOrders from './customerOrders';
 import * as actions from '../actions/index';
 
 class CustomerOrdersWrapper extends React.Component {
-  constructor () {
-    super();
-    this.customerId = '9003716456';
-  }
-  
-  componentDidMount () {
-    this.props.dispatch(actions.fetchOrders(this.customerId));
-  }
 
+  componentDidMount () {
+    this.props.dispatch(actions.fetchOrders(this.props.params.id));
+  }
 
 render () {
     
     return (
       <div className="">
         <Header />
-        <CustomerOrders customerId={this.customerId}/>
+        <CustomerOrders customerId={this.props.params.id}/>
         <Footer />
       </div>
     );

@@ -12,49 +12,6 @@ import SearchBar from './searchBar';
 import RowRender from './rowRender';
 import * as actions from '../actions';
 
-var columnMetaData = [{
-    "columnName": "Product_Code",
-    "order": 1,
-    "locked": false,
-    "visible": true,
-    "displayName": "Code"
-  },
-  {
-    "columnName": "Product_Name",
-    "order": 2,
-    "locked": false,
-    "visible": true,
-    "displayName": "Name"
-  },
-  {
-    "columnName": "Stock_Position",
-    "order": 3,
-    "locked": false,
-    "visible": true,
-    "displayName": "Item Location"
-  },
-  {
-    "columnName": "Availability",
-    "order": 4,
-    "locked": false,
-    "visible": true,
-    "displayName": "Qty Available"
-  },
-  {
-    "columnName": "Quantity",
-    "order": 5,
-    "locked": false,
-    "visible": true,
-    "displayName": "Unit"
-  },
-  {
-    "columnName": "Price",
-    "order": 6,
-    "locked": false,
-    "visible": true,
-    "displayName": "Price"
-  }];
-
 class ProductsList extends React.Component {
   constructor () {
     super();
@@ -64,37 +21,18 @@ class ProductsList extends React.Component {
     String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
-    this.customFilterFunction = (items, query) => this._customFilterFunction (items, query);
-    this.updateRowChange = (row, event) => this._updateRowChange (row, event); 
-    this.updateRowChange2 = (row, event) => this._updateRowChange2 (row, event);
+    this.handleRowClick = (row) => this._handleRowClick (row); 
     this.setSelectedItems = (items, event) => this._setSelectedItems (items, event);
     this.generateModifiedList = (list) => this._generateModifiedList(list);
     this.addOneItem = (event, data) => this._addOneItem(event, data);
     this.reduceOneItem = (event, data) => this._reduceOneItem(event, data);
-    this.selectedItems = [];
   }
 
-  componentDidMount () {
-  }
-
-  _customFilterFunction (items, query) {
-    console.log("items: ", items);
-    console.log("query: ", query);
-    // return items.filter((item) => {
-
-    //   for (var key in flat) {
-    //     if (String(flat[key]).toLowerCase().indexOf(query.toLowerCase()) >= 0) return true;
-    //   };
-    //   return false;
-    // });
-}
-
-
-_updateRowChange (row, event) {
+_handleRowClick (row) {
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
-      item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
+      item = exis.find(item => row.Product_Code === item.Product_Code);
   if (!item) {
-    let selectedNewItem=Object.assign({}, row.props.data);
+    let selectedNewItem=Object.assign({}, row);
     if (selectedNewItem.Availability > 0) {
       selectedNewItem.Availability -= 1;
       exis.push({
@@ -120,26 +58,6 @@ _updateRowChange (row, event) {
   this.setState ({
     selectedItems: exis
   })
-}
-
-_updateRowChange2 (row, event) {
-  var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
-      item = exis.find(x => x.Product_Code == row.props.data.Product_Code);
-   if (item.Availability > 1) {
-      row.props.data.Availability -= 1;
-      item.Availability -= 1;
-      item.quantity += 1;
-    } else {
-      // we can add a table {OUT OF STOCK} and push the items popping here as well
-      // while updating the table, we need to ensure if the user enters 10 items initially
-      // and removing the 10 items from selected, we need to remove that item in off stocks 
-      // list as well
-      alert ("Item out of stock!");
-    }
-      
-  this.setState ({
-    selectedItems: exis
-  });
 }
 
 _setSelectedItems (items, event) {
@@ -183,26 +101,32 @@ _reduceOneItem (event, data) {
 }
 
 render () {
-    let isDisabled = this.state.selectedItems.length > 0 ? false : true;
+    const rowOptions = {
+       onRowClick: this.handleRowClick
+    }
+    let isDisabled = this.state.selectedItems.length > 0 ? false : true,
+        productsList = this.props.list.length > 0 ? this.props.list : [];
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-6">
-             <Griddle results={this.props.list} 
-                  tableClassName="table table-hover"
-                  showFilter={true}
-                  enableInfiniteScroll={true}
-                  resultsPerPage={5}
-                  bodyHeight={500}
-                  useFixedHeader={true}
-                  columnMetadata={columnMetaData}
-                  columns={["Product_Code", "Product_Name", "Stock_Position", "Availability", "Quantity", "Price"]}
-                  filterPlaceholderText="Search Item Code" 
-                  useCustomFilterComponent={true} 
-                  customFilterComponent={SearchBar} 
-                  customFilterer={this.customFilterFunction} 
-                  onRowClick={this.updateRowChange}
-                  noDataMessage={"Fetching data..."} />
+            <BootstrapTable data={ productsList } height='620px' options={ rowOptions }>
+               <TableHeaderColumn isKey
+                                   width='100'
+                                   dataField='Product_Code'
+                                   filter={ { type: 'TextFilter', delay: 500 } } >
+                  Product Name
+                </TableHeaderColumn>
+                <TableHeaderColumn width='150'
+                                   dataField='Product_Name'
+                                   filter={ { type: 'TextFilter', delay: 500 } } >
+                  Product Name
+                </TableHeaderColumn>
+                <TableHeaderColumn width='75' dataField='Stock_Position'>Location</TableHeaderColumn>
+                <TableHeaderColumn width='50' dataField='Quantity'>Unit</TableHeaderColumn>
+                <TableHeaderColumn width='75' dataField='Availability'>Availability</TableHeaderColumn>
+                <TableHeaderColumn width='75' dataField='Price'>Price</TableHeaderColumn>
+              </BootstrapTable>
           </div>
           <div className="col-md-6">
             <div style={{marginTop: '25px'}} >

@@ -129,7 +129,7 @@ export function authenticateUser (userData) {
           if(response.data.isAuthenticationSuccess && response.data.userRole === 'executive') {
             dispatch(push('/purchase'));
           } else if (response.data.isAuthenticationSuccess && response.data.userRole === 'admin') {
-            dispatch(push('/moq'));
+            dispatch(push('/dashboard'));
           }
        });
   };
@@ -158,7 +158,7 @@ export function fetchDashboardData () {
        })
        .catch((err) => {
          console.log(err);
-          // dispatch(push('/'))
+          dispatch(push('/'))
        });
   };
 }
