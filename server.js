@@ -55,6 +55,7 @@ function isLoggedIn(req, res, next) {
   console.log(req.isAuthenticated());
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated()) {
+      console.log("res", req.user);
       return next();
     } else {
       console.log("res", req.user);
@@ -113,6 +114,10 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
   app.get('/api/getMoqList',
           isLoggedIn,
           (req, res) => routes.getMoqList (req, res, db));
+
+  app.get('/api/getCustomerOrders',
+          isLoggedIn,
+          (req, res) => routes.getCustomerOrders (req, res, db));
 
   app.put('/api/submitOrder', (req, res) => routes.submitOrder(req, res, db));
 

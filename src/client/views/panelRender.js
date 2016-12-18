@@ -5,80 +5,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
+import moment from 'moment';
 
-class RowRender extends React.Component {
+class PanelRender extends React.Component {
 
 constructor ()  {
   super();
-  this.generateRows = (list) => this._generateRows(list);
+  this.generateOrderItemsInPanel = (order) => this._generateOrderItemsInPanel(order);
 }
 
-_generateRows (list) {
-  console.log("generateRows",this);
-
-  let cols = ['Product_Code', 'Product_Name', 'quantity', 'StockStatus'],
-      thisRef = this;
-
-  return list.map((item, index) => {
-            // handle the column data within each row
-            var statusClassName = classNames({'glyphicon glyphicon-ok-sign stockStatusAvailable': item.Availability >= 1}, 
-                                             {'glyphicon glyphicon-exclamation-sign stockStatusNotAvailable': item.Availability < 1}),
-                cells = cols.map((colData, index) => {
-                if (colData === 'StockStatus') {
-                  return <td key={index}> <span className={statusClassName}> </span> </td>;
-                } else if (colData !== 'quantity') {
-                  return <td key={index}> {item[colData]} </td>;
-                } else if (colData === 'quantity') {
-                  return ( 
-                    <td key={index}> 
-                      <span className="glyphicon glyphicon-minus-sign" 
-                            style={{color: 'firebrick', fontSize: 'small', marginRight: '5px'}} 
-                            onClick={(event) => thisRef.props.reduceOneItem(event, item)}>  
-                      </span> 
-                      {item[colData]}
-                      <span className="glyphicon glyphicon-plus-sign" 
-                            style={{color: 'forestgreen', fontSize: 'small', marginLeft: '5px'}} 
-                            onClick={(event) => thisRef.props.addOneItem(event, item)}>  
-                      </span> 
-                      </td>);
-                }
-                
-            });
-            return <tr key={index}> {cells} </tr>;
+_generateOrderItemsInPanel (order) {
+  let cols = ['Product_Name', 'quantity', 'Total'],
+      list = order.items;
+     return list.map((item, index) => {
+        var cells = cols.map((colData, index) => {
+            if (colData === 'Product_Name') {
+              return <span key={index} className="productName"> {item[colData]} </span>;
+            }
+            return <span key={index} className="genericStyle"> {item[colData]} </span>;
         });
+        return <div key={index} className="panelItems" > {cells} </div>;
+     });
 }
 
 render () {
-    console.log(this.props);
-    let list = this.props.data.length > 0 ? this.generateRows(this.props.data) : this.props.data;
-       
 
-    return (
-      <div>
-        <table className="table table-success">
-         <thead>
-              <tr>
-                <th>
-                  Item Code
-                </th>
-                <th>
-                  Product Name
-                </th>
-                <th>
-                  Quantity
-                </th>
-                <th>
-                  Availability
-                </th>
-              </tr>
-          </thead>
-          <tbody>
-            {list}
-          </tbody>
-        </table>
-       </div>
+ return (
+      <div className="panel panel-success">
+        <div className="panel-heading" data-toggle="collapse" data-target={`#${this.props.data._id}`}>
+          <strong>
+            {moment(this.props.data.createdOn).format('DD MMM YYYY, hh:mm a')}
+            <span style={{float: 'right'}}>
+              {this.props.data.totalAmount}
+            </span>
+          </strong>
+        </div>
+        <div id={this.props.data._id} className="panel-body collapse">
+          {this.generateOrderItemsInPanel(this.props.data)}
+        </div>
+      </div>
     );
   }
 }
 
-export default RowRender;
+export default PanelRender;

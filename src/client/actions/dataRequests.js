@@ -50,3 +50,13 @@ export function authenticateUser (userData) {
     data: userData
   });
 }
+
+export function fetchOrders (customerId) {
+  return axios({
+    method: 'get',
+    url: '/api/getCustomerOrders',
+    params: {
+      customerId: customerId
+    }
+  });
+}
