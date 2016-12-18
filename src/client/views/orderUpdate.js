@@ -12,33 +12,25 @@ const cellEditProp = {
   mode: 'click',
   blurToSave: true
 };
-class orderUpdate extends React.Component {
+class OrderUpdate extends React.Component {
   constructor () {
     super();
-    this.state = {
-      productItems: []
-    };
     String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
   }
 
   componentDidMount () {
-    this.props.dispatch(actions.fetchProductsList());
   }
 
   render() {
     console.log(this.props.list)
     return (
-      <BootstrapTable data={ this.props.list } cellEdit={ cellEditProp }>
-          <TableHeaderColumn dataField='Product_Code' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='Product_Name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='Quantity'>Product Price</TableHeaderColumn>
-          <TableHeaderColumn dataField='Availability'>Availability</TableHeaderColumn>
-      </BootstrapTable>
-    );
+      <div> testing </div>
+      );
   }
 }
+
 
 function select (state) {
   return {
@@ -46,5 +38,5 @@ function select (state) {
   };
 }
 
-export default connect(select)(orderUpdate);
+export default connect(select)(OrderUpdate);
 
