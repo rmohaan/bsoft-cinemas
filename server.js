@@ -51,9 +51,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
-require('./config/passport')(passport);
-
 function isLoggedIn(req, res, next) {
   console.log(req.isAuthenticated());
     // if user is authenticated in the session, carry on 
@@ -78,12 +75,14 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
   if (err) return console.log(err)
   db = database;
 
+  require('./config/passport')(passport, db);
   app.get ('/', (req, res, next) => {
     res.sendFile(path.join(publicDir, 'index.html'));
   });
 
  app.post('/api/login', function (req, res, next) {
     passport.authenticate('local-login', function (err, user, info) {
+
         if (err) {
           return next(err); // will generate a 500 error
         }

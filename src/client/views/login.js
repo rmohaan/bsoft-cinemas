@@ -65,7 +65,6 @@ render () {
         className = {
           errorClass: classNames({'hide': isAuthenticationSuccessful}, {'alert alert-danger': !isAuthenticationSuccessful})
         };
-        console.log("from loginjs isauthen", isAuthenticationSuccessful);
     return (
       <div className="loginForm">
         <div className="container">

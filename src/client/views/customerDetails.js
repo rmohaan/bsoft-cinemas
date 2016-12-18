@@ -16,12 +16,10 @@ class CustomerInfo extends React.Component {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
     this.state = {
-        name: '',
-        phone: ''
+        name: ''
     };
 
     this.handleNameChange = (event) =>  this._handleNameChange(event);
-    this.handlePhoneChange = (event) =>  this._handlePhoneChange(event);
     this.submitCustomerInfo = (event) => this._submitCustomerInfo(event);
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -32,22 +30,15 @@ class CustomerInfo extends React.Component {
     });
   }
 
-  _handlePhoneChange(event) {
-    this.setState({
-        phone: event.target.value
-    });
-  }
-
   _submitCustomerInfo (event) {
     alert('Customer Info submitted');
     event.preventDefault();
     let customerData = {
         name: this.state.name, 
-        phone: this.state.phone, 
+        customerId: this.props.orderInfo.customerId, 
         orderId: this.props.orderInfo.orderId, 
         totalAmount: this.props.orderInfo.totalAmount
     };
-    console.log(customerData);
     this.props.dispatch(actions.submitCustomerInfo(customerData));
   }
 
@@ -79,14 +70,14 @@ render () {
                                     className="form-control" 
                                     id="inputPhone" 
                                     placeholder="Enter the phone number" 
-                                    value={this.state.phone}
-                                    onChange={this.handlePhoneChange} />
+                                    value={this.props.orderInfo.customerId}
+                                    readOnly />
                         </div>
                     </div>
                     <div className="form-group row">
                     <label htmlFor="inputAge" className="col-sm-2 col-form-label">Age </label>
                         <div className="col-sm-10">
-                            <input type="number" className="form-control" id="inputAge" placeholder="Enter the age" value="Not applicable" readOnly/>
+                            <input type="number" className="form-control" id="inputAge" placeholder="Enter the age" value={0} readOnly/>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -104,7 +95,7 @@ render () {
                     <div className="form-group row">
                     <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email</label>
                         <div className="col-sm-10">
-                            <input type="email" className="form-control" id="inputEmail" placeholder="Enter the email id" value="Not applicable" readOnly/>
+                            <input type="email" className="form-control" id="inputEmail" placeholder="Enter the email id" value="admin@nearme.com" readOnly/>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -134,7 +125,7 @@ render () {
                     <div className="form-group row">
                     <label htmlFor="inputAddressPincode" className="col-sm-2 col-form-label">Pincode </label>
                         <div className="col-sm-10">
-                            <input type="number" className="form-control" id="inputAddressPincode" placeholder="Enter the pincode" value="Not applicable" readOnly/>
+                            <input type="number" className="form-control" id="inputAddressPincode" placeholder="Enter the pincode" value={600001} readOnly/>
                         </div>
                     </div>
                     <div className="form-group row" style={{float: 'right'}}>

@@ -91,8 +91,6 @@ class ProductsList extends React.Component {
 
 
 _updateRowChange (row, event) {
-  //console.log("row value", row);
-  //console.log("Event", event);
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = exis.find(item => row.props.data.Product_Code === item.Product_Code);
   if (!item) {
@@ -106,10 +104,8 @@ _updateRowChange (row, event) {
     } else {
       alert ("Item not in stock!");
     }
-        // row.props.data.Availability -= 1;
   } else {
     if (item.Availability > 0) {
-      // row.props.data.Availability -= 1;
       item.Availability -= 1;
       item.quantity += 1;
     } else {
@@ -127,12 +123,8 @@ _updateRowChange (row, event) {
 }
 
 _updateRowChange2 (row, event) {
-  // console.log("row value", row);
-  // console.log("Event", event);
-   // console.log(this.state.selectedItems);
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = exis.find(x => x.Product_Code == row.props.data.Product_Code);
-   console.log(row.props.data);
    if (item.Availability > 1) {
       row.props.data.Availability -= 1;
       item.Availability -= 1;
@@ -151,15 +143,12 @@ _updateRowChange2 (row, event) {
 }
 
 _setSelectedItems (items, event) {
-  // var items = this.state.selectedItems;
   event.preventDefault();
   this.props.dispatch(actions.setSelectedItems({items}));
   this.props.dispatch(push('/checkout'));
-
 }
 
 _addOneItem (event, data) {
-  console.log("addOneItem", event, data);
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = newState.find((item) => item.Product_Code === data.Product_Code);
   
@@ -176,7 +165,6 @@ _addOneItem (event, data) {
 }
 
 _reduceOneItem (event, data) {
-  console.log("reduceOneItem", event, data);
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
       item = newState.find((item) => item.Product_Code === data.Product_Code);
 
@@ -219,8 +207,17 @@ render () {
           <div className="col-md-6">
             <div style={{marginTop: '25px'}} >
               <strong> <i> Items to checkout </i> </strong>
-              <RowRender data={this.state.selectedItems} addOneItem={this.addOneItem} reduceOneItem={this.reduceOneItem} />
-              <a className="btn btn-success" style={{float: 'right', marginTop: '5px'}} onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)} disabled={isDisabled}>Checkout</a> 
+              <RowRender data={this.state.selectedItems}
+                         addOneItem={this.addOneItem}
+                         reduceOneItem={this.reduceOneItem}
+                         forCheckout={false}
+                         cols={['Product_Code', 'Product_Name', 'quantity', 'StockStatus']} />
+              <button className="btn btn-success"
+                  style={{float: 'right', marginTop: '5px'}}
+                  onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}
+                  disabled={isDisabled} >
+                  Checkout
+              </button> 
             </div>
         </div>
       </div>
@@ -230,7 +227,6 @@ render () {
 }
 
 function select (state) {
-  console.log(state);
   return {
     list: state.productsList,
     selectedItems: state.selectedItems
