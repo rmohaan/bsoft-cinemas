@@ -6,51 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as actions from '../actions/index';
 import { connect } from 'react-redux';
-import Griddle from 'griddle-react';
-import SearchBar from './searchBar';
-
-var columnMetaData = [{
-    "columnName": "Product_Code",
-    "order": 1,
-    "locked": false,
-    "visible": true,
-    "displayName": "Code"
-  },
-  {
-    "columnName": "Product_Name",
-    "order": 2,
-    "locked": false,
-    "visible": true,
-    "displayName": "Name"
-  },
-  {
-    "columnName": "Stock_Position",
-    "order": 3,
-    "locked": false,
-    "visible": true,
-    "displayName": "Item Location"
-  },
-  {
-    "columnName": "Availability",
-    "order": 4,
-    "locked": false,
-    "visible": true,
-    "displayName": "Qty Available"
-  },
-  {
-    "columnName": "Quantity",
-    "order": 5,
-    "locked": false,
-    "visible": true,
-    "displayName": "Unit"
-  },
-  {
-    "columnName": "Price",
-    "order": 6,
-    "locked": false,
-    "visible": true,
-    "displayName": "Price"
-  }];
+import moment from 'moment';
+import { Link } from 'react-router';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 class Dashboard extends React.Component {
   constructor () {
@@ -61,39 +19,51 @@ class Dashboard extends React.Component {
     String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
-    this.customFilterFunction = (items, query) => this._customFilterFunction (items, query);
+    this.customerNameFormatter = (cell, row) => this._customerNameFormatter (cell, row);
+    this.dateFormatter = (cell, row) => this._dateFormatter (cell, row);
   }
 
-  componentDidMount () {
-    this.props.dispatch(actions.fetchMoqList());
+  _customerNameFormatter (cell, row) {
+    return (<Link to={`/orders/${row.customerId}`} > {row.name.capitalize()} </Link>);
   }
-   _customFilterFunction (items, query) {
-    console.log("items: ", items);
-    console.log("query: ", query);
+
+  _dateFormatter (cell, row) {
+    return moment(row.createdOn).format('DD MMM YYYY, hh:mm a');
   }
 
 render () {
-  console.log("testing")
-    console.log(this.props.moqList)
+    let moqList = this.props.moqList.length > 0 ? this.props.moqList : [],
+        customersList = this.props.customersList.length > 0 ? this.props.customersList : [];
     return (
         <div className="container-fluid">
         <div className="row">
-          <div className="col-md-12">
-            <div>
-              <Griddle results={this.props.moqList} 
-                  tableClassName="table table-hover" 
-                  showFilter={true}
-                  enableInfiniteScroll={true}
-                  resultsPerPage={10}
-                  bodyHeight={500}
-                  useFixedHeader={true}
-                  columnMetadata={columnMetaData}
-                  columns={["Product_Code", "Product_Name", "Stock_Position", "Availability", "Quantity", "Price"]}
-                  filterPlaceholderText="Search Item Code" 
-                  useCustomFilterComponent={true} 
-                  customFilterComponent={SearchBar} 
-                  customFilterer={this.customFilterFunction} />
-            </div>
+          <div className="col-md-6">
+              <BootstrapTable data={ moqList } height='500px'>
+                <TableHeaderColumn isKey
+                                   width='150' 
+                                   dataField='Product_Name' 
+                                   filter={ { type: 'TextFilter', delay: 500 } } >
+                  Product Name
+                </TableHeaderColumn>
+                <TableHeaderColumn width='150' dataField='Quantity'>Unit</TableHeaderColumn>
+                <TableHeaderColumn width='150'
+                                  dataField='Availability'
+                                  filter={ {  type: 'NumberFilter', delay: 100, numberComparators: [ '=', '>', '<=' ] } } >
+                  Availability
+                </TableHeaderColumn>
+              </BootstrapTable>
+          </div>
+          <div className="col-md-2">
+          </div>
+          <div className="col-md-6">
+              <BootstrapTable data={ customersList } height='500px'>
+                <TableHeaderColumn dataField='name' isKey dataFormat={ this.customerNameFormatter } filter={ { type: 'TextFilter', delay: 0 } }>Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='createdOn' dataFormat={ this.dateFormatter }>Purchase Date</TableHeaderColumn>
+                <TableHeaderColumn dataField='totalAmount' 
+                                  filter={ {  type: 'NumberFilter', delay: 100, numberComparators: [ '=', '>', '<=' ] } } >
+                  Purchase Amount
+                </TableHeaderColumn>
+              </BootstrapTable>
           </div>
         </div>
         </div>
@@ -104,7 +74,8 @@ render () {
 function select (state) {
   console.log(state);
   return {
-    moqList: state.moqList
+    moqList: state.moqList,
+    customersList: state.customersList
   };
 }
 

@@ -21,19 +21,12 @@ class CustomerOrders extends React.Component {
     String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
-    this.customFilterFunction = (items, query) => this._customFilterFunction (items, query);
-    this.updateRowChange = (row, event) => this._updateRowChange (row, event); 
-    this.updateRowChange2 = (row, event) => this._updateRowChange2 (row, event);
     this.handleCancelAction = (event) => this._handleCancelAction (event);
-    this.generateModifiedList = (list) => this._generateModifiedList(list);
-    this.addOneItem = (event, data) => this._addOneItem(event, data);
-    this.reduceOneItem = (event, data) => this._reduceOneItem(event, data);
-    this.selectedItems = [];
   }
 
 _handleCancelAction (event) {
   event.preventDefault();
-  this.props.dispatch(push('/moq'));
+  this.props.dispatch(push('/dashboard'));
 }
 
 render () {

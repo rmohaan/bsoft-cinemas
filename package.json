@@ -37,6 +37,7 @@
     "node-sass": "^3.13.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "react-bootstrap-table": "^2.7.1",
     "redux": "^3.6.0",
     "sass-loader": "^4.0.2",
     "serve-favicon": "^2.3.2",

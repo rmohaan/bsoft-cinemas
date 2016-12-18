@@ -27,6 +27,13 @@ export function fetchMoqList () {
   });
 }
 
+export function fetchCustomersList () {
+  return axios({
+    method: 'get',
+    url: '/api/getCustomersList'
+  });
+}
+
 export function submitOrder (items) {
   return axios({
     method: 'put',
@@ -59,4 +66,18 @@ export function fetchOrders (customerId) {
       customerId: customerId
     }
   });
+}
+
+export function fetchDashboardData () {
+  return axios.all([
+    fetchMoqList(),
+    fetchCustomersList()
+  ])
+  .then(axios.spread(function (moqListResponse, customersListResponse) {
+    // ... but this callback will be executed only when both requests are complete.
+    return {
+      moqList: moqListResponse.data,
+      customersList: customersListResponse.data
+    };
+  }));
 }

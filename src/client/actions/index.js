@@ -18,6 +18,13 @@ export function setMoqData (data) {
   };
 }
 
+export function setDashboardData (data) {
+  return {
+    type: actionEvents.SET_DASHBOARD_DATA,
+    payload: data
+  };
+}
+
 export function setSelectedItems (data) {
   return {
     type: actionEvents.SET_SELECTED_ITEMS,
@@ -122,7 +129,7 @@ export function authenticateUser (userData) {
           if(response.data.isAuthenticationSuccess && response.data.userRole === 'executive') {
             dispatch(push('/purchase'));
           } else if (response.data.isAuthenticationSuccess && response.data.userRole === 'admin') {
-            dispatch(push('/moq'));
+            dispatch(push('/dashboard'));
           }
        });
   };
@@ -142,3 +149,16 @@ export function fetchOrders (customerId) {
   };
 }
 
+export function fetchDashboardData () {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.fetchDashboardData()
+       .then(function (response) {
+         dispatch(setDashboardData(response));
+       })
+       .catch((err) => {
+         console.log(err);
+          dispatch(push('/'))
+       });
+  };
+}

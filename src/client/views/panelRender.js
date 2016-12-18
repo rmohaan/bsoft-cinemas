@@ -32,7 +32,11 @@ render () {
 
  return (
       <div className="panel panel-success">
-        <div className="panel-heading" data-toggle="collapse" data-target={`#${this.props.data._id}`}>
+        <div className="panel-heading cursorPointer"
+             data-toggle="collapse"
+             data-target={`#${this.props.data._id}`}
+             aria-expanded="false"
+             aria-controls={`#${this.props.data._id}`} >
           <strong>
             {moment(this.props.data.createdOn).format('DD MMM YYYY, hh:mm a')}
             <span style={{float: 'right'}}>

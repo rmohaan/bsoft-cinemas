@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://npmcdn.com/react-bootstrap-table@2.7.1/dist/react-bootstrap-table-all.min.css');
+// @import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 /*
  * Base structure
  */
@@ -12,7 +14,6 @@ body {
   position: relative;
   font-family: 'Roboto', sans-serif;
 }
-
 
 /*
  * Global add-ons
@@ -207,6 +208,10 @@ footer {
   }
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
 .panelItems {
   .productName {
     display: inline-block;
@@ -224,6 +229,16 @@ footer {
   }
   width: 100%;
 }
+
+.productName {
+    display: inline-block;
+    width: 15%;
+    overflow: hidden;
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 50px;
+  }
 
 .loginForm {
   form {

@@ -36,7 +36,7 @@ render () {
     return (
          <div className="input-group" style={{width:'200%', marginBottom:'5px', marginTop: '5px'}}>
               <span className="input-group-addon"><i className="glyphicon glyphicon-search"></i></span>
-              <input id="msg" type="text" className="form-control" name="msg" placeholder="Search Items..." onChange={this.searchChange} />
+              <input id="msg" type="text" className="form-control" name="msg" placeholder="Search..." onChange={this.searchChange} />
          </div>
     );
   }

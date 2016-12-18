@@ -34,11 +34,11 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Login}/>
-        <Route path='/moq' component={HomePageWrapper} />
+        <Route path='/dashboard' component={HomePageWrapper} />
         <Route path='/purchase' component={ProductSearch} />
         <Route path='/checkout' component={ProductsCheckout} />
         <Route path='/customer' component={CustomerInfo} />
-        <Route path='/orders' component={CustomerOrdersWrapper} />
+        <Route path='/orders/:id' component={CustomerOrdersWrapper} />
       </Route>
     </Router>
   </Provider>, document.getElementById('app'));

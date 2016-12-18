@@ -20,6 +20,12 @@ module.exports = {
     });
   },
 
+  getCustomersList (req, res, db) {
+    db.collection('customers').find().toArray(function (err, results) {
+      res.status(200).json(results);
+    });
+  },
+
   submitOrder (req, res, db) {
     var data = req.body;
     var stocksUpdateData = data.stocks_update;

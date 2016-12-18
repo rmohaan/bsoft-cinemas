@@ -43,6 +43,21 @@ export function moqList (state, action) {
     newState = action.payload;
   }
 
+  if (actionType === actionEvents.SET_DASHBOARD_DATA) {
+    newState = action.payload.moqList;
+  }
+
+  return newState;
+}
+
+export function customersList (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_DASHBOARD_DATA) {
+    newState = action.payload.customersList;
+  }
+
   return newState;
 }
 

@@ -115,6 +115,10 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
           isLoggedIn,
           (req, res) => routes.getMoqList (req, res, db));
 
+  app.get('/api/getCustomersList',
+          isLoggedIn,
+          (req, res) => routes.getCustomersList (req, res, db));
+
   app.get('/api/getCustomerOrders',
           isLoggedIn,
           (req, res) => routes.getCustomerOrders (req, res, db));
