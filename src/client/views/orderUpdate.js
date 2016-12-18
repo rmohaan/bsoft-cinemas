@@ -24,7 +24,7 @@ class orderUpdate extends React.Component {
   }
 
   componentDidMount () {
-    
+    this.props.dispatch(actions.fetchProductsList());
   }
 
   render() {
