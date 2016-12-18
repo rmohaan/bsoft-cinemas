@@ -65,6 +65,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount () {
+    this.props.dispatch(actions.fetchProductsList());
     this.props.dispatch(actions.fetchMoqList());
   }
    _customFilterFunction (items, query) {

@@ -15,6 +15,7 @@ import ProductSearch from './views/productSearchWrapper';
 import ProductsCheckout from './views/productsCheckout';
 import CustomerInfo from './views/customerDetails';
 import CustomerOrdersWrapper from './views/customerOrdersWrapper';
+import CustomerOrdersUpdate from './views/orderUpdate';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -39,6 +40,7 @@ render(
         <Route path='/checkout' component={ProductsCheckout} />
         <Route path='/customer' component={CustomerInfo} />
         <Route path='/orders' component={CustomerOrdersWrapper} />
+        <Route path='/orderUpdate' component={CustomerOrdersUpdate} />
       </Route>
     </Router>
   </Provider>, document.getElementById('app'));
