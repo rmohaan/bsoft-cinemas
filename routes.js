@@ -12,6 +12,14 @@ module.exports = {
     });
   },
 
+  getCustomerOrders (req, res, db) {
+    var customerId = req.query.customerId;
+    console.log(customerId);
+    db.collection('orders').find({'customerId': customerId}).toArray(function (err, results) {
+      res.status(200).json(results);
+    });
+  },
+
   submitOrder (req, res, db) {
     var data = req.body;
     var stocksUpdateData = data.stocks_update;

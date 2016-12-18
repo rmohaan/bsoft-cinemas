@@ -63,7 +63,6 @@ class ProductsCheckout extends React.Component {
       });
     }
     selectedItemList.map((item) => {
-      delete item.Product_Name;
       delete item.Quantity;
       delete item._id;
       delete item.Availability;
@@ -72,7 +71,7 @@ class ProductsCheckout extends React.Component {
 
      let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
      this.props.dispatch(actions.submitOrder({
-       ...toInsert,
+       items: toInsert,
        totalAmount: totalAmount,
        customerId: phoneNumber,
        stocks_update: stocksUpdate,

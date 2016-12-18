@@ -39,6 +39,13 @@ export function setCustomerInfo (data) {
   };
 }
 
+export function setCustomerOrdersList (data) {
+  return {
+    type: actionEvents.SET_CUSTOMER_ORDERS_LIST,
+    payload: data
+  };
+}
+
 export function setAuthenticationDetails (data) {
   return {
     type: actionEvents.SET_AUTHENTICATION_DETAILS,
@@ -120,3 +127,18 @@ export function authenticateUser (userData) {
        });
   };
 }
+
+export function fetchOrders (customerId) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.fetchOrders(customerId)
+       .then(function (response) {
+         dispatch(setCustomerOrdersList(response.data));
+       })
+       .catch((err) => {
+          console.log(err);
+          dispatch(push('/'))
+       });
+  };
+}
+

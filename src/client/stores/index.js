@@ -10,6 +10,7 @@ const reducer = combineReducers({
   selectedItems: reducers.selectedItems,
   orderInfo: reducers.orderInfo,
   moqList: reducers.moqList,
+  customerOrders: reducers.customerOrders,
   authenticationDetails: reducers.authenticationDetails,
   routing: routerReducer
 });

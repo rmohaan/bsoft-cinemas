@@ -207,6 +207,24 @@ footer {
   }
 }
 
+.panelItems {
+  .productName {
+    display: inline-block;
+    width: 15%;
+    overflow: hidden;
+    text-transform: capitalize;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 50px;
+  }
+  .genericStyle {
+    width: 25%;
+    vertical-align: top;
+    margin-right: 50px;
+  }
+  width: 100%;
+}
+
 .loginForm {
   form {
     border: 3px solid #f1f1f1;

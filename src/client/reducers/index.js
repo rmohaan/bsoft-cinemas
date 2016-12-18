@@ -46,6 +46,17 @@ export function moqList (state, action) {
   return newState;
 }
 
+export function customerOrders (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_CUSTOMER_ORDERS_LIST) {
+      newState = action.payload;
+  }
+
+  return newState;
+}
+
 export function authenticationDetails (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);
