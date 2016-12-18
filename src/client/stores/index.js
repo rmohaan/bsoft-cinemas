@@ -11,6 +11,7 @@ const reducer = combineReducers({
   orderInfo: reducers.orderInfo,
   moqList: reducers.moqList,
   customerOrders: reducers.customerOrders,
+  customersList: reducers.customersList,
   authenticationDetails: reducers.authenticationDetails,
   routing: routerReducer
 });

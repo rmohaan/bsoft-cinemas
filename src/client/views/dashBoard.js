@@ -8,49 +8,54 @@ import * as actions from '../actions/index';
 import { connect } from 'react-redux';
 import Griddle from 'griddle-react';
 import SearchBar from './searchBar';
+import moment from 'moment';
+import { Link } from 'react-router';
 
-var columnMetaData = [{
-    "columnName": "Product_Code",
-    "order": 1,
-    "locked": false,
-    "visible": true,
-    "displayName": "Code"
-  },
+let moqColumnMetaData = [
   {
     "columnName": "Product_Name",
-    "order": 2,
+    "order": 1,
     "locked": false,
     "visible": true,
     "displayName": "Name"
   },
   {
-    "columnName": "Stock_Position",
-    "order": 3,
-    "locked": false,
-    "visible": true,
-    "displayName": "Item Location"
-  },
-  {
-    "columnName": "Availability",
-    "order": 4,
-    "locked": false,
-    "visible": true,
-    "displayName": "Qty Available"
-  },
-  {
     "columnName": "Quantity",
-    "order": 5,
+    "order": 2,
     "locked": false,
     "visible": true,
     "displayName": "Unit"
   },
   {
-    "columnName": "Price",
-    "order": 6,
+    "columnName": "Availability",
+    "order": 3,
     "locked": false,
     "visible": true,
-    "displayName": "Price"
-  }];
+    "displayName": "Qty Available"
+  }],
+  customerColumnMetadata =[
+    {
+      "columnName": "name",
+      "order": 1,
+      "locked": false,
+      "visible": true,
+      "displayName": "Name"
+    },
+    {
+      "columnName": "createdOn",
+      "order": 1,
+      "locked": false,
+      "visible": true,
+      "displayName": "Purchase Date"
+    },
+    {
+      "columnName": "totalAmount",
+      "order": 1,
+      "locked": false,
+      "visible": true,
+      "displayName": "Purchase Amount"
+    }
+  ];
 
 class Dashboard extends React.Component {
   constructor () {
@@ -62,24 +67,31 @@ class Dashboard extends React.Component {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
     this.customFilterFunction = (items, query) => this._customFilterFunction (items, query);
+    this.formatCustomersList = (list) => this._formatCustomersList (list);
   }
 
-  componentDidMount () {
-    this.props.dispatch(actions.fetchMoqList());
-  }
    _customFilterFunction (items, query) {
     console.log("items: ", items);
     console.log("query: ", query);
   }
 
+  _formatCustomersList (list) {
+    // <Link to={`/orders/${item.customerId}`} > {item.name} </Link>
+    list.map((item) => { 
+      item.createdOn = moment(item.createdOn).format('DD MMM YYYY, hh:mm a'); 
+      // item.name = '<a> ${item.name} </a>';
+    });
+    return list;
+  }
+
 render () {
   console.log("testing")
     console.log(this.props.moqList)
+    let customersList = this.props.customersList.length > 0 ? this.formatCustomersList(this.props.customersList) : this.props.customersList;
     return (
         <div className="container-fluid">
         <div className="row">
-          <div className="col-md-12">
-            <div>
+          <div className="col-md-6">
               <Griddle results={this.props.moqList} 
                   tableClassName="table table-hover" 
                   showFilter={true}
@@ -87,13 +99,27 @@ render () {
                   resultsPerPage={10}
                   bodyHeight={500}
                   useFixedHeader={true}
-                  columnMetadata={columnMetaData}
-                  columns={["Product_Code", "Product_Name", "Stock_Position", "Availability", "Quantity", "Price"]}
+                  columnMetadata={moqColumnMetaData}
+                  columns={["Product_Name", "Quantity", "Availability"]}
                   filterPlaceholderText="Search Item Code" 
                   useCustomFilterComponent={true} 
                   customFilterComponent={SearchBar} 
                   customFilterer={this.customFilterFunction} />
-            </div>
+          </div>
+          <div className="col-md-6">
+              <Griddle results={customersList} 
+                  tableClassName="table table-hover" 
+                  showFilter={true}
+                  enableInfiniteScroll={true}
+                  resultsPerPage={10}
+                  bodyHeight={500}
+                  useFixedHeader={true}
+                  columnMetadata={customerColumnMetadata}
+                  columns={["name", "createdOn", "totalAmount"]}
+                  filterPlaceholderText="Search customers" 
+                  useCustomFilterComponent={true} 
+                  customFilterComponent={SearchBar} 
+                  customFilterer={this.customFilterFunction} />
           </div>
         </div>
         </div>
@@ -104,7 +130,8 @@ render () {
 function select (state) {
   console.log(state);
   return {
-    moqList: state.moqList
+    moqList: state.moqList,
+    customersList: state.customersList
   };
 }
 

@@ -6,6 +6,7 @@ let state = {
   moqList: [],
   orderInfo: {},
   customerOrders: [],
+  customersList: [],
   authenticationDetails: {
     authenticationMessage: '',
     isAuthenticationSuccess: true,

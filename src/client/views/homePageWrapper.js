@@ -6,10 +6,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './header';
 import Footer from './footer';
-import SideBar from './sideBar';
 import Dashboard from './dashBoard';
+import * as actions from '../actions/index';
+import { connect } from 'react-redux';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor () {
     super();
     this.state = {
@@ -21,24 +22,24 @@ export default class Home extends React.Component {
   }
 
   componentDidMount () {
+    this.props.dispatch(actions.fetchDashboardData());
   }
 
-render () {
-    
-    return (
-      <div className="container">
-         <Header />
-         <div className="container-fluid">
-           <div className="row">
-            <SideBar />
-             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-               <h1 className="page-header">Dashboard</h1>
-                  <Dashboard />    
-             </div>
-           </div>
-         </div>
-         <Footer />
-      </div>
-    );
-  }
+  render () {
+      
+      return (
+        <div className="container-fluid">
+          <Header />
+          <div className="container-fluid">
+            <div className="row">
+                <h1 className="page-header" style={{textAlign: 'center'}}>Dashboard</h1>
+                <Dashboard />    
+            </div>
+          </div>
+          <Footer />
+        </div>
+      );
+    }
 }
+
+export default connect()(Home);

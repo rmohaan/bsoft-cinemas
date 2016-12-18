@@ -18,6 +18,13 @@ export function setMoqData (data) {
   };
 }
 
+export function setDashboardData (data) {
+  return {
+    type: actionEvents.SET_DASHBOARD_DATA,
+    payload: data
+  };
+}
+
 export function setSelectedItems (data) {
   return {
     type: actionEvents.SET_SELECTED_ITEMS,
@@ -142,3 +149,16 @@ export function fetchOrders (customerId) {
   };
 }
 
+export function fetchDashboardData () {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.fetchDashboardData()
+       .then(function (response) {
+         dispatch(setDashboardData(response));
+       })
+       .catch((err) => {
+         console.log(err);
+          // dispatch(push('/'))
+       });
+  };
+}
