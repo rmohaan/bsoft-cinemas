@@ -120,6 +120,8 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
           (req, res) => routes.getCustomerOrders (req, res, db));
 
   app.put('/api/submitOrder', (req, res) => routes.submitOrder(req, res, db));
+  
+  app.put('/api/updateStock', (req, res) => routes.submitUpdatedStockItems(req, res, db));
 
   app.put('/api/submitCustomerInfo', (req, res) => routes.submitCustomerInfo(req, res, db));
 

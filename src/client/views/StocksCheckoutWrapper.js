@@ -10,13 +10,12 @@ import Footer from './footer';
 import StocksUpdate from './StocksUpdate';
 import * as actions from '../actions/index';
 
-class StocksOrdersWrapper extends React.Component {
+class StocksCheckoutWrapper extends React.Component {
   constructor () {
     super();
   }
   
   componentDidMount () {
-    this.props.dispatch(actions.fetchProductsList());
   }
 
 
@@ -31,10 +30,10 @@ render () {
               <div className="row">
                 <div className="col-md-12">
                   <div>
-                        <h2 style={blueColor}>Stocks update</h2>
+                        <h2 style={blueColor}>Update stock confirm</h2>
                   </div>
                   <div>
-                    <StocksUpdate page={"StocksUpdate"}/>
+                    <StocksUpdate page={"StocksConfirm"}/>
                   </div>
                  </div>
               </div>
@@ -45,4 +44,4 @@ render () {
   }
 }
 
-export default connect()(StocksOrdersWrapper);
+export default connect()(StocksCheckoutWrapper);

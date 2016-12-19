@@ -24,6 +24,17 @@ export function selectedItems (state, action) {
   return newState;
 }
 
+export function updateStockItems (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_UPDATE_STOCKS_ITEMS) {
+    newState = action.payload;
+  }
+
+  return newState;
+}
+
 export function orderInfo (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);

@@ -25,6 +25,12 @@ export function setSelectedItems (data) {
   };
 }
 
+export function setUpdatedStockItems (data) {
+  return {
+    type: actionEvents.SET_UPDATE_STOCKS_ITEMS,
+    payload: data
+  };
+}
 export function setOrderInfo (data) {
   return {
     type: actionEvents.SET_ORDER_INFO,
@@ -59,6 +65,8 @@ export function fetchProductsList () {
     return dataRequests.fetchProductsList()
        .then(function (response) {
          if (response.status === 200) {
+          console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+          console.log(response.data);
            dispatch(setProductsList(response.data));
          }
        })
@@ -76,6 +84,22 @@ export function submitOrder (items) {
          if (response.status === 200) {
            dispatch(setOrderInfo({orderId: response.data.insertedIds[0], totalAmount: items.totalAmount, customerId: items.customerId}));
            dispatch(push('/customer'));
+         }
+       })
+       .catch((err) => {
+          console.log(err);
+       });
+  };
+}
+
+export function submitUpdatedStockItems (items) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.submitUpdatedStockItems(items)
+       .then(function (response) {
+         if (response.status === 200) {
+           fetchMoqList();
+           dispatch(push('/moq'));
          }
        })
        .catch((err) => {
