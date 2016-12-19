@@ -38,6 +38,13 @@ render () {
         <div className="container-fluid">
         <div className="row">
           <div className="col-md-6">
+              <div>
+                <a className="navbar-brand" href="/orderupdate">Update Stock</a>
+              </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
               <BootstrapTable data={ moqList } height='500px'>
                 <TableHeaderColumn isKey
                                    width='150' 

@@ -68,6 +68,13 @@ export function fetchOrders (customerId) {
   });
 }
 
+export function submitUpdatedStockItems (items) {
+  return axios({
+    method: 'put',
+    url: '/api/updateStock',
+    data: items
+  });
+}
 export function fetchDashboardData () {
   return axios.all([
     fetchMoqList(),

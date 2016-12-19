@@ -94,6 +94,52 @@ module.exports = {
     });
   },
 
+submitUpdatedStockItems (req, res, db) {
+    var data = req.body;
+    var stocksUpdateData = data.items,moqData=[];
+    db.collection('moq').find().toArray(function (err, results) {
+      moqData=results;
+    });
+    var stocksUpdateDataLength = stocksUpdateData.length,
+          moqDataLength = moqData.length,moqUpdateDataLength=[],
+          successfulCount = 0,moqSuccessfulCount;
+          stocksUpdateData.map((item) => {
+          var id = item.Product_Code;
+          delete item["_id"];
+          item.updateOn = new Date();
+          db.collection('stocks').updateOne({
+            "Product_Code": id
+          }, {
+              $set: item
+            }, function (err, updateResult) {
+              if (updateResult.result.ok === 1) {
+                successfulCount += 1;
+                moqData.map((moqData) => {
+                  if((moqData.Product_Code === id) && (item.Availability >5)){
+                    db.collection('moq').remove({"Product_Code": item.Product_Code}, {justOne: true}, function (err, moqResult) {
+                                  if (moqResult.result.ok === 1) {
+                                    moqSuccessfulCount += 1;
+                                  } else {
+                                    res.status(500).json({
+                                      message: "Request Failed"
+                                    });
+                                  }
+                    });
+                  }
+                });
+              } else {
+                res.status(500).json({
+                  message: "Request Failed"
+                });
+              }
+              if (successfulCount === stocksUpdateDataLength) {
+                console.log("here")
+                
+               res.status(200).json(updateResult);
+              }
+            });
+        });
+  },
   submitCustomerInfo (req, res, db) {
     req.body.createdOn = new Date();
     db.collection('customers').insert(req.body, function (err, results) {

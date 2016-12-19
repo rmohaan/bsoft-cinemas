@@ -7,6 +7,7 @@ let state = {
   orderInfo: {},
   customerOrders: [],
   customersList: [],
+  updatedStockItems:[],
   authenticationDetails: {
     authenticationMessage: '',
     isAuthenticationSuccess: true,

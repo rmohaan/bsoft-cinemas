@@ -8,6 +8,7 @@ import defaultState from './defaultState';
 const reducer = combineReducers({
   productsList: reducers.productsList,
   selectedItems: reducers.selectedItems,
+  updatedStockItems: reducers.updateStockItems,
   orderInfo: reducers.orderInfo,
   moqList: reducers.moqList,
   customerOrders: reducers.customerOrders,
