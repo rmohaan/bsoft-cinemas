@@ -89,6 +89,6 @@
   "scripts": {
     "start": "nodemon server.js",
     "buildDev": "webpack -d --watch",
-    "build": "cross-env NODE_ENV=development babel src --out-dir dist"
+    "build": "webpack -d"
   }
 }
