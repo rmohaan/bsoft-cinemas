@@ -87,7 +87,8 @@
     ]
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "startDev": "nodemon server.js",
     "buildDev": "webpack -d --watch",
     "build": "webpack -d"
   }
