@@ -11,6 +11,7 @@ import Griddle from 'griddle-react';
 import SearchBar from './searchBar';
 import RowRender from './rowRender';
 import * as actions from '../actions';
+import Loading from 'react-loading';
 
 class ProductsList extends React.Component {
   constructor () {
@@ -106,47 +107,57 @@ render () {
     }
     let isDisabled = this.state.selectedItems.length > 0 ? false : true,
         productsList = this.props.list.length > 0 ? this.props.list : [];
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-6">
-            <BootstrapTable data={ productsList } height='620px' options={ rowOptions }>
-               <TableHeaderColumn isKey
-                                   width='100'
-                                   dataField='Product_Code'
-                                   filter={ { type: 'TextFilter', delay: 500 } } >
-                  Product Name
-                </TableHeaderColumn>
-                <TableHeaderColumn width='150'
-                                   dataField='Product_Name'
-                                   filter={ { type: 'TextFilter', delay: 500 } } >
-                  Product Name
-                </TableHeaderColumn>
-                <TableHeaderColumn width='75' dataField='Stock_Position'>Location</TableHeaderColumn>
-                <TableHeaderColumn width='50' dataField='Quantity'>Unit</TableHeaderColumn>
-                <TableHeaderColumn width='75' dataField='Availability'>Availability</TableHeaderColumn>
-                <TableHeaderColumn width='75' dataField='Price'>Price</TableHeaderColumn>
-              </BootstrapTable>
-          </div>
-          <div className="col-md-6">
-            <div style={{marginTop: '25px'}} >
-              <strong> <i> Items to checkout </i> </strong>
-              <RowRender data={this.state.selectedItems}
-                         addOneItem={this.addOneItem}
-                         reduceOneItem={this.reduceOneItem}
-                         forCheckout={false}
-                         cols={['Product_Code', 'Product_Name', 'quantity', 'StockStatus']} />
-              <button className="btn btn-success"
-                  style={{float: 'right', marginTop: '5px'}}
-                  onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}
-                  disabled={isDisabled} >
-                  Checkout
-              </button> 
+
+    if (productsList.length > 0 ) {
+        return (
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-6">
+              <BootstrapTable data={ productsList } height='620px' options={ rowOptions }>
+                <TableHeaderColumn isKey
+                                    width='100'
+                                    dataField='Product_Code'
+                                    filter={ { type: 'TextFilter', delay: 500 } } >
+                    Product Name
+                  </TableHeaderColumn>
+                  <TableHeaderColumn width='150'
+                                    dataField='Product_Name'
+                                    filter={ { type: 'TextFilter', delay: 500 } } >
+                    Product Name
+                  </TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='Stock_Position'>Location</TableHeaderColumn>
+                  <TableHeaderColumn width='50' dataField='Quantity'>Unit</TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='Availability'>Availability</TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='Price'>Price</TableHeaderColumn>
+                </BootstrapTable>
             </div>
+            <div className="col-md-6">
+              <div style={{marginTop: '25px'}} >
+                <strong> <i> Items to checkout </i> </strong>
+                <RowRender data={this.state.selectedItems}
+                          addOneItem={this.addOneItem}
+                          reduceOneItem={this.reduceOneItem}
+                          forCheckout={false}
+                          cols={['Product_Code', 'Product_Name', 'quantity', 'StockStatus']} />
+                <button className="btn btn-success"
+                    style={{float: 'right', marginTop: '5px'}}
+                    onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}
+                    disabled={isDisabled} >
+                    Checkout
+                </button> 
+              </div>
+          </div>
         </div>
-      </div>
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div style={{verticalAlign: 'center', marginLeft: '50%', marginTop: '25%'}} >
+          <Loading type='spokes' color='#cc1119' height='100px' width='100px'/>
+        </div>
+      );
+    }
+    
   }
 }
 

@@ -68,19 +68,20 @@ render () {
     return (
       <div className="loginForm">
         <div className="container">
-            <label><b>Username</b></label>
-            <input type="text" placeholder="Enter phone number" name="phone" value={this.state.phone} onChange={this.handlePhoneInput} required />
-
-            <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" value={this.state.password} onChange={this.handlePasswordInput} required />
-                
-            <button type="btn btn-success" onClick={this.authenticateUser}>Login</button>
-            <div className={className.errorClass}>{message}</div>
-        </div>
-
-        <div className="container" style={{'backgroundColor':'#f1f1f1'}}>
-            <button type="button" className="cancelbtn">Cancel</button>
-            <span className="pwd">Forgot <a href="#">password?</a></span>
+            <fieldset>
+              <legend>Authentication Details</legend>
+                <label><b><span className="glyphicon glyphicon-user"> Username </span></b></label>
+                <div>
+                <input type="text"  name="phone" value={this.state.phone} onChange={this.handlePhoneInput} required />
+                </div>
+                <label><b><span className="glyphicon glyphicon-lock"> Password </span></b></label>
+                <input type="password" placeholder="Enter password" name="password" value={this.state.password} onChange={this.handlePasswordInput} required />
+                    
+                <button type="btn btn-success" onClick={this.authenticateUser}>Login</button>
+                <div className={className.errorClass}>{message}</div>
+                <button type="button" className="cancelbtn">Cancel</button>
+                <span className="pwd">Forgot <a href="#">password?</a></span>
+            </fieldset>
         </div>
       </div>
     );

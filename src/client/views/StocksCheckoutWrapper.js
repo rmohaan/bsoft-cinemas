@@ -20,17 +20,17 @@ class StocksCheckoutWrapper extends React.Component {
 
 
 render () {
-    var blueColor = {
-      color: 'blue'
+    var textColor = {
+      color: 'aliceblue'
     };
     return (
-      <div className="">
+      <div>
         <Header />
           <div className="container">
               <div className="row">
                 <div className="col-md-12">
                   <div>
-                        <h2 style={blueColor}>Update stock confirm</h2>
+                        <h2 style={textColor}>Update stock - Confirm? </h2>
                   </div>
                   <div>
                     <StocksUpdate page={"StocksConfirm"}/>

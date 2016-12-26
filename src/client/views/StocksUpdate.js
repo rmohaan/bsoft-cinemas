@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { push } from 'react-router-redux';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Loading from 'react-loading';
 
 class StocksUpdate extends React.Component {
   
@@ -29,7 +30,7 @@ class StocksUpdate extends React.Component {
     event.preventDefault();
     this.props.dispatch(actions.setUpdatedStockItems({items}));
      if (this.props.page === 'StocksUpdate')
-      this.props.dispatch(push('/stockcheckout'));
+      this.props.dispatch(push('/stockCheckout'));
     else{
       this.props.dispatch(actions.submitUpdatedStockItems({items: items}));
     }
@@ -80,9 +81,9 @@ class StocksUpdate extends React.Component {
     };
     return (
       <div>
-      {pList.length >0 ?
+      {pList.length > 0 ?
           (
-                  <BootstrapTable pagination data={pList} cellEdit={ cellEditProp } maxHeight='433' search >
+                  <BootstrapTable pagination data={ pList } cellEdit={ cellEditProp } maxHeight='433px' search >
                     <TableHeaderColumn dataField='Product_Code'editable={ false }  dataSort columnTitle isKey={ true }>Product ID</TableHeaderColumn>
                     <TableHeaderColumn dataField='Product_Name' width='400' dataSort columnTitle editable={ false }>Product Name</TableHeaderColumn>
                     <TableHeaderColumn dataField='Quantity' dataSort columnTitle editable={ false }>Product Price</TableHeaderColumn>
@@ -90,8 +91,8 @@ class StocksUpdate extends React.Component {
                   </BootstrapTable>
           ) :
           (
-              <div>
-                <h1>no data</h1>
+              <div style={{verticalAlign: 'center', marginLeft: '50%', marginTop: '25%'}}>
+               <Loading type='spokes' color='#cc1119' height='100px' width='100px'/>
               </div>
           )
 

@@ -41,8 +41,8 @@ render(
         <Route path='/checkout' component={ProductsCheckout} />
         <Route path='/customer' component={CustomerInfo} />
         <Route path='/orders/:id' component={CustomerOrdersWrapper} />
-        <Route path='/orderupdate' component={StocksOrdersWrapper} />
-        <Route path='/stockcheckout' component={StocksCheckoutWrapper} />
+        <Route path='/stockUpdate' component={StocksOrdersWrapper} />
+        <Route path='/stockCheckout' component={StocksCheckoutWrapper} />
       </Route>
     </Router>
   </Provider>, document.getElementById('app'));
