@@ -77,35 +77,17 @@ MongoClient.connect('mongodb://rmohaan:rmohaan%4012@ds131878.mlab.com:31878/fmcg
   db = database;
 
   require('./config/passport')(passport, db);
+  
   app.get ('/', (req, res, next) => {
     res.sendFile(path.join(publicDir, 'index.html'));
   });
 
- app.post('/api/login', function (req, res, next) {
-    passport.authenticate('local-login', function (err, user, info) {
+  app.post('/api/login', 
+           (req, res, next) => routes.loginUser(req, res, next, passport));
 
-        if (err) {
-          return next(err); // will generate a 500 error
-        }
-
-        // Generate a JSON response reflecting authentication status
-        if (!user) {
-          return res.send({isAuthenticationSuccess: false, authenticationMessage: 'authentication failed'});
-        }
-
-        req.login(user, loginErr => {
-          if (loginErr) {
-            return next(loginErr);
-          }
-
-          return res.send({
-            userRole: user.userRole,
-            isAuthenticationSuccess: true,
-            authenticationMessage: 'authentication successful'
-          });
-        });
-      })(req, res, next);
-  });
+  app.get('/api/logout', 
+           isLoggedIn,
+           (req, res) => routes.logoutUser(req, res));
 
   app.get('/api/getProductsList',
           isLoggedIn,

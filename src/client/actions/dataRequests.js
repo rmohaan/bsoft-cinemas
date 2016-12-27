@@ -13,6 +13,22 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
+export function authenticateUser (userData) {
+  return axios({
+    method: 'post',
+    url: '/api/login',
+    data: userData
+  });
+}
+
+export function logoutUser () {
+  return axios({
+    method: 'get',
+    url: '/api/logout'
+  });
+}
+
+
 export function fetchProductsList () {
   return axios({
     method: 'get',
@@ -47,14 +63,6 @@ export function submitCustomerInfo (items) {
     method: 'put',
     url: '/api/submitCustomerInfo',
     data: items
-  });
-}
-
-export function authenticateUser (userData) {
-  return axios({
-    method: 'post',
-    url: '/api/login',
-    data: userData
   });
 }
 

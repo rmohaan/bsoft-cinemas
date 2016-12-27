@@ -68,11 +68,14 @@ render () {
     return (
       <div className="loginForm">
         <div className="container">
+            <div style={{textAlign: 'center'}}>
+                <h3> Welcome to <strong>nearme-shopping</strong> </h3>
+            </div>
             <fieldset>
-              <legend>Authentication Details</legend>
+              <legend>Authenticate Yourself</legend>
                 <label><b><span className="glyphicon glyphicon-user"> Username </span></b></label>
                 <div>
-                <input type="text"  name="phone" value={this.state.phone} onChange={this.handlePhoneInput} required />
+                <input type="text" placeholder="Enter user id" name="phone" value={this.state.phone} onChange={this.handlePhoneInput} required />
                 </div>
                 <label><b><span className="glyphicon glyphicon-lock"> Password </span></b></label>
                 <input type="password" placeholder="Enter password" name="password" value={this.state.password} onChange={this.handlePasswordInput} required />

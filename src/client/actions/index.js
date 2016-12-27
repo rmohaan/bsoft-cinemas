@@ -66,14 +66,38 @@ export function setAuthenticationDetails (data) {
   };
 }
 
+
+export function authenticateUser (userData) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.authenticateUser(userData)
+       .then(function (response) {
+         // dispatch(setAuthenticationDetails(response.data));
+          if(response.data.isAuthenticationSuccess && response.data.userRole === 'executive') {
+            dispatch(push('/purchase'));
+          } else if (response.data.isAuthenticationSuccess && response.data.userRole === 'admin') {
+            dispatch(push('/dashboard'));
+          }
+       });
+  };
+}
+
+export function logoutUser (userData) {
+  return function (dispatch) {
+    return dataRequests.logoutUser(userData)
+       .then(function (response) {
+         dispatch(push('/'));
+       });
+  };
+}
+
+
 export function fetchProductsList () {
   return function (dispatch) {
     // dispatch(fetchingData());
     return dataRequests.fetchProductsList()
        .then(function (response) {
          if (response.status === 200) {
-          console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-          console.log(response.data);
            dispatch(setProductsList(response.data));
          }
        })
@@ -140,21 +164,6 @@ export function fetchMoqList () {
        })
        .catch((err) => {
           dispatch(push('/'))
-       });
-  };
-}
-
-export function authenticateUser (userData) {
-  return function (dispatch) {
-    // dispatch(fetchingData());
-    return dataRequests.authenticateUser(userData)
-       .then(function (response) {
-         // dispatch(setAuthenticationDetails(response.data));
-          if(response.data.isAuthenticationSuccess && response.data.userRole === 'executive') {
-            dispatch(push('/purchase'));
-          } else if (response.data.isAuthenticationSuccess && response.data.userRole === 'admin') {
-            dispatch(push('/dashboard'));
-          }
        });
   };
 }
