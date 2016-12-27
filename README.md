@@ -24,5 +24,10 @@ $ npm run buildDev
 $ npm run startDev
 ```
 
+## Open website
+```sh
+localhost:4000
+```
+
 ## Usage
 This package is an npm package.
