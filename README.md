@@ -29,5 +29,10 @@ $ npm run startDev
 localhost:4000
 ```
 
+## To view product backlog
+```sh
+https://trello.com/b/GPxuwNbb/fmcg
+```
+
 ## Usage
 This package is an npm package.
