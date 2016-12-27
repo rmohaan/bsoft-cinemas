@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import Loading from 'react-loading';
 
 class Dashboard extends React.Component {
   constructor () {
@@ -22,14 +21,7 @@ class Dashboard extends React.Component {
     }
     this.customerNameFormatter = (cell, row) => this._customerNameFormatter (cell, row);
     this.dateFormatter = (cell, row) => this._dateFormatter (cell, row);
-    this.showLoader = () => this._showLoader ();
   }
-
-  
-  _showLoader () {
-     return (<Loading type='spinningBubbles' color='#ff7a00' />);
-  }
-  
 
   _customerNameFormatter (cell, row) {
     return (<Link to={`/orders/${row.customerId}`} > {row.name.capitalize()} </Link>);
@@ -87,8 +79,8 @@ render () {
       );
     } else {
       return (
-        <div style={{verticalAlign: 'center', marginLeft: '50%', marginTop: '25%'}} >
-          <Loading type='spokes' color='#cc1119' height='100px' width='100px'/>
+        <div>
+           <div className="loader" height='100px' width='100px'>Loading...</div>
         </div>
         );
     }

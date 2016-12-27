@@ -11,7 +11,6 @@ import Griddle from 'griddle-react';
 import SearchBar from './searchBar';
 import RowRender from './rowRender';
 import * as actions from '../actions';
-import Loading from 'react-loading';
 
 class ProductsList extends React.Component {
   constructor () {
@@ -152,8 +151,8 @@ render () {
       );
     } else {
       return (
-        <div style={{verticalAlign: 'center', marginLeft: '50%', marginTop: '25%'}} >
-          <Loading type='spokes' color='#cc1119' height='100px' width='100px'/>
+        <div>
+           <div className="loader" height='100px' width='100px'>Loading...</div>
         </div>
       );
     }

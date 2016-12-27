@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import { push } from 'react-router-redux';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import Loading from 'react-loading';
 
 class StocksUpdate extends React.Component {
   
@@ -91,8 +90,8 @@ class StocksUpdate extends React.Component {
                   </BootstrapTable>
           ) :
           (
-              <div style={{verticalAlign: 'center', marginLeft: '50%', marginTop: '25%'}}>
-               <Loading type='spokes' color='#cc1119' height='100px' width='100px'/>
+              <div>
+                <div className="loader" height='100px' width='100px'>Loading...</div>
               </div>
           )
 
