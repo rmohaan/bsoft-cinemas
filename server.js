@@ -9,6 +9,7 @@ const passport = require('passport');
 const session = require('express-session');
 var flash    = require('connect-flash');
 var mongoose = require('mongoose');
+var compress = require('compression');
 var port = process.env.PORT || 4000;
 
 var dbData = require('./config/database.js');
@@ -28,6 +29,7 @@ var db;
 
 // CORS
 app.use(logger('dev'));
+app.use(compress());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
