@@ -7,13 +7,13 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
 const displayNames = {
-  'Product_Code': 'Product Code',
-  'Product_Name': 'Product Name',
-  'Quantity' : 'Units',
+  'productCode': 'Product Code',
+  'productName': 'Product Name',
+  'unit' : 'Units',
   'quantity': 'Quantity',
-  'Price': 'Price',
+  'price': 'Price',
   'Total': 'Total Amount',
-  'StockStatus': 'Status'
+  'stockStatus': 'Status'
 };
 
 class RowRender extends React.Component {
@@ -38,12 +38,12 @@ _generateRowsForSelection(list, cols) {
   return list.map((item, index) => {
     // handle the column data within each row
     var statusClassName = classNames({
-        'glyphicon glyphicon-ok-sign stockStatusAvailable': item.Availability >= 1
+        'glyphicon glyphicon-ok-sign stockStatusAvailable': item.availability >= 1
       }, {
-        'glyphicon glyphicon-exclamation-sign stockStatusNotAvailable': item.Availability < 1
+        'glyphicon glyphicon-exclamation-sign stockStatusNotAvailable': item.availability < 1
       }),
       cells = cols.map((colData, index) => {
-        if (colData === 'StockStatus') {
+        if (colData === 'stockStatus') {
           return <td key={index}>
             <span className={statusClassName}></span>
           </td>;

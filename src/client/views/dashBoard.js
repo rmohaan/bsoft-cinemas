@@ -50,13 +50,13 @@ render () {
                 <BootstrapTable data={ moqList } height='500px'>
                   <TableHeaderColumn isKey
                                     width='150' 
-                                    dataField='Product_Name' 
+                                    dataField='productName' 
                                     filter={ { type: 'TextFilter', delay: 500 } } >
                     Product Name
                   </TableHeaderColumn>
-                  <TableHeaderColumn width='150' dataField='Quantity'>Unit</TableHeaderColumn>
+                  <TableHeaderColumn width='150' dataField='unit'>Unit</TableHeaderColumn>
                   <TableHeaderColumn width='150'
-                                    dataField='Availability'
+                                    dataField='availability'
                                     filter={ {  type: 'NumberFilter', delay: 100, numberComparators: [ '=', '>', '<=' ] } } >
                     Availability
                   </TableHeaderColumn>
