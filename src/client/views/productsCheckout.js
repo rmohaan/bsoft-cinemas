@@ -28,13 +28,13 @@ class ProductsCheckout extends React.Component {
   }
 
   _modifiedList(items) {
-    items.map((item) => { item.Total = item.Price * item.quantity; });
+    items.map((item) => { item.Total = item.price * item.quantity; });
     return items;
   }
 
   _getTotalAmount(items) {
     let totalAmt = 0;
-    items.map((item) => { totalAmt += item.Price * item.quantity; });
+    items.map((item) => { totalAmt += item.price * item.quantity; });
     return totalAmt;
   }
 
@@ -49,12 +49,12 @@ class ProductsCheckout extends React.Component {
       for (const selectedItem of selectedItemList) {
       Object.keys(products).forEach(function (key) {
         let productObj = products[key];
-        if (selectedItem.Product_Code === productObj.Product_Code) {
+        if (selectedItem.productCode === productObj.productCode) {
           var jsonData = {};
-          jsonData["Product_Code"] = selectedItem.Product_Code;
-          jsonData["Availability"] = selectedItem.Availability;
-          if (selectedItem.Availability <= 5) {
-            productObj.Availability = selectedItem.Availability;
+          jsonData["productCode"] = selectedItem.productCode;
+          jsonData["availability"] = selectedItem.availability;
+          if (selectedItem.availability <= 5) {
+            productObj.availability = selectedItem.availability;
             moqList.push(productObj);
           }
           stocksUpdate.push(jsonData)
@@ -63,10 +63,10 @@ class ProductsCheckout extends React.Component {
       });
     }
     selectedItemList.map((item) => {
-      delete item.Quantity;
+      delete item.unit;
       delete item._id;
-      delete item.Availability;
-      delete item.Price;
+      delete item.availability;
+      delete item.price;
     });
 
      let toInsert = [...selectedItemList]; //{...list, totalAmount: totalAmount};
@@ -100,7 +100,7 @@ render () {
         <div className="row">
           <div className="col-md-12" style={{ marginTop:'5px'}}>
            <RowRender data={list}
-                      cols={['Product_Code', 'Product_Name', 'Quantity', 'quantity', 'Price', 'Total']}
+                      cols={['productCode', 'productName', 'unit', 'quantity', 'price', 'Total']}
                       forCheckout={true} />
            <div style={{ marginTop:'5px'}} className="panel panel-default checkout">
                 <div className="panel-heading">

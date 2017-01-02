@@ -15,11 +15,11 @@ constructor ()  {
 }
 
 _generateOrderItemsInPanel (order) {
-  let cols = ['Product_Name', 'quantity', 'Total'],
+  let cols = ['productName', 'quantity', 'Total'],
       list = order.items;
      return list.map((item, index) => {
         var cells = cols.map((colData, index) => {
-            if (colData === 'Product_Name') {
+            if (colData === 'productName') {
               return <span key={index} className="productName"> {item[colData]} </span>;
             }
             return <span key={index} className="genericStyle"> {item[colData]} </span>;

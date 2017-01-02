@@ -37,13 +37,13 @@ class StocksUpdate extends React.Component {
   }
   _onAfterSaveCell (row, cellName, cellValue) {
        var exis = JSON.parse(JSON.stringify(this.state.updatedStockItems)),
-          item = exis.find(item => row.Product_Code === item.Product_Code);
+          item = exis.find(item => row.productCode === item.productCode);
           if (!item) {
             exis.push({
                 ...row
               });
           }else{
-            item.Availability = cellValue;
+            item.availability = cellValue;
           }
           this.setState ({
             updatedStockItems: exis
@@ -83,10 +83,10 @@ class StocksUpdate extends React.Component {
       {pList.length > 0 ?
           (
                   <BootstrapTable pagination data={ pList } cellEdit={ cellEditProp } maxHeight='433px' search >
-                    <TableHeaderColumn dataField='Product_Code'editable={ false }  dataSort columnTitle isKey={ true }>Product ID</TableHeaderColumn>
-                    <TableHeaderColumn dataField='Product_Name' width='400' dataSort columnTitle editable={ false }>Product Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField='Quantity' dataSort columnTitle editable={ false }>Product Price</TableHeaderColumn>
-                    <TableHeaderColumn dataField='Availability' dataSort={ true } columnTitle >Availability</TableHeaderColumn>
+                    <TableHeaderColumn dataField='productCode'editable={ false }  dataSort columnTitle isKey={ true }>Product ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='productName' width='400' dataSort columnTitle editable={ false }>Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='price' dataSort columnTitle editable={ false }>Product Price</TableHeaderColumn>
+                    <TableHeaderColumn dataField='availability' dataSort={ true } columnTitle >Availability</TableHeaderColumn>
                   </BootstrapTable>
           ) :
           (

@@ -30,11 +30,11 @@ class ProductsList extends React.Component {
 
 _handleRowClick (row) {
   var exis = JSON.parse(JSON.stringify(this.state.selectedItems)),
-      item = exis.find(item => row.Product_Code === item.Product_Code);
+      item = exis.find(item => row.productCode === item.productCode);
   if (!item) {
     let selectedNewItem=Object.assign({}, row);
-    if (selectedNewItem.Availability > 0) {
-      selectedNewItem.Availability -= 1;
+    if (selectedNewItem.availability > 0) {
+      selectedNewItem.availability -= 1;
       exis.push({
         ...selectedNewItem,
         quantity: 1
@@ -43,8 +43,8 @@ _handleRowClick (row) {
       alert ("Item not in stock!");
     }
   } else {
-    if (item.Availability > 0) {
-      item.Availability -= 1;
+    if (item.availability > 0) {
+      item.availability -= 1;
       item.quantity += 1;
     } else {
       // we can add a table {OUT OF STOCK} and push the items popping here as well
@@ -68,10 +68,10 @@ _setSelectedItems (items, event) {
 
 _addOneItem (event, data) {
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
-      item = newState.find((item) => item.Product_Code === data.Product_Code);
+      item = newState.find((item) => item.productCode === data.productCode);
   
-  if (item.Availability > 0) {
-      item.Availability -= 1;
+  if (item.availability > 0) {
+      item.availability -= 1;
       item.quantity += 1;
     } else {
       alert ("Item out of stock!");
@@ -84,14 +84,14 @@ _addOneItem (event, data) {
 
 _reduceOneItem (event, data) {
   let newState = JSON.parse(JSON.stringify(this.state.selectedItems)),
-      item = newState.find((item) => item.Product_Code === data.Product_Code);
+      item = newState.find((item) => item.productCode === data.productCode);
 
   if (item.quantity > 1) {
-      item.Availability += 1;
+      item.availability += 1;
       item.quantity -= 1;
     } else {
       var indexToRemove = newState.findIndex((item) => {
-        return item.Product_Code === data.Product_Code;
+        return item.productCode === data.productCode;
       });
       newState.splice(indexToRemove, 1);
     }
@@ -115,19 +115,19 @@ render () {
               <BootstrapTable data={ productsList } height='620px' options={ rowOptions }>
                 <TableHeaderColumn isKey
                                     width='100'
-                                    dataField='Product_Code'
+                                    dataField='productCode'
                                     filter={ { type: 'TextFilter', delay: 500 } } >
                     Product Name
                   </TableHeaderColumn>
                   <TableHeaderColumn width='150'
-                                    dataField='Product_Name'
+                                    dataField='productName'
                                     filter={ { type: 'TextFilter', delay: 500 } } >
                     Product Name
                   </TableHeaderColumn>
-                  <TableHeaderColumn width='75' dataField='Stock_Position'>Location</TableHeaderColumn>
-                  <TableHeaderColumn width='50' dataField='Quantity'>Unit</TableHeaderColumn>
-                  <TableHeaderColumn width='75' dataField='Availability'>Availability</TableHeaderColumn>
-                  <TableHeaderColumn width='75' dataField='Price'>Price</TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='stockPosition'>Location</TableHeaderColumn>
+                  <TableHeaderColumn width='50' dataField='unit'>Unit</TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='availability'>Availability</TableHeaderColumn>
+                  <TableHeaderColumn width='75' dataField='price'>Price</TableHeaderColumn>
                 </BootstrapTable>
             </div>
             <div className="col-md-6">
@@ -137,7 +137,7 @@ render () {
                           addOneItem={this.addOneItem}
                           reduceOneItem={this.reduceOneItem}
                           forCheckout={false}
-                          cols={['Product_Code', 'Product_Name', 'quantity', 'StockStatus']} />
+                          cols={['productCode', 'productName', 'quantity', 'stockStatus']} />
                 <button className="btn btn-success"
                     style={{float: 'right', marginTop: '5px'}}
                     onClick={(event) => this.setSelectedItems(this.state.selectedItems, event)}

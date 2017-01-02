@@ -83,6 +83,7 @@ export function submitUpdatedStockItems (items) {
     data: items
   });
 }
+
 export function fetchDashboardData () {
   return axios.all([
     fetchMoqList(),
