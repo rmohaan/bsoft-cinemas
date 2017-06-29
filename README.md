@@ -1,13 +1,13 @@
-# nearme
+# module-generator
 
 ## Summary
 
-nearme module
+broadsoft-cinemas module
 
 ## Install
 
 ```sh
-$ npm install nearme --save
+$ npm install broadsoft-cinemas --save
 ```
 ## Install dependencies
 ```sh
@@ -15,8 +15,8 @@ $ npm install
 ```
 
 ## Build package
-```sh 
-$ npm run buildDev 
+```sh
+$ npm run buildDev
 ```
 
 ## Run server
@@ -27,11 +27,6 @@ $ npm run startDev
 ## Open website
 ```sh
 localhost:4000
-```
-
-## To view product backlog
-```sh
-https://trello.com/b/GPxuwNbb/fmcg
 ```
 
 ## Usage

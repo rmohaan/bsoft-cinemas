@@ -19,19 +19,13 @@ class Header extends React.Component {
   }
 
 render () {
-  
+
     return (
       <div className="container">
          <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
           <div className="container-fluid">
             <div className="navbar-header">
-              <a className="navbar-brand" href="/dashboard">FMCG</a>
-            </div>
-            <div id="navbar" className="navbar-collapse collapse">
-              <ul className="nav navbar-nav navbar-right">
-                <li><a href="/purchase">Purchase</a></li>
-                <li><a onClick={this.handleLogout}>Logout</a></li>
-              </ul>
+              <a className="navbar-brand" href="/seatSelection">BSoft Cinemas</a>
             </div>
           </div>
          </nav>

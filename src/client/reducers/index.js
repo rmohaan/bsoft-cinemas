@@ -2,92 +2,22 @@
 
 import * as actionEvents from '../actions/events';
 
-export function productsList (state, action) {
+export function data (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);
 
-  if (actionType === actionEvents.SET_PRODUCTS_LIST) {
+  if (actionType === actionEvents.SET_LAYOUT_DATA) {
     newState = action.payload;
   }
 
   return newState;
 }
 
-export function selectedItems (state, action) {
+export function info (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);
 
-  if (actionType === actionEvents.SET_SELECTED_ITEMS) {
-    newState = action.payload;
-  }
-
-  return newState;
-}
-
-export function updateStockItems (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_UPDATE_STOCKS_ITEMS) {
-    newState = action.payload;
-  }
-
-  return newState;
-}
-
-export function orderInfo (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_ORDER_INFO) {
-    newState = action.payload;
-  }
-
-  return newState;
-}
-
-export function moqList (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_MOQ_DATA) {
-    newState = action.payload;
-  }
-
-  if (actionType === actionEvents.SET_DASHBOARD_DATA) {
-    newState = action.payload.moqList;
-  }
-
-  return newState;
-}
-
-export function customersList (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_DASHBOARD_DATA) {
-    newState = action.payload.customersList;
-  }
-
-  return newState;
-}
-
-export function customerOrders (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_CUSTOMER_ORDERS_LIST) {
-      newState = action.payload;
-  }
-
-  return newState;
-}
-
-export function authenticationDetails (state, action) {
-  let actionType = action.type,
-      newState = Object.assign({}, state);
-
-  if (actionType === actionEvents.SET_AUTHENTICATION_DETAILS) {
+  if (actionType === actionEvents.SET_INFO) {
     newState = action.payload;
   }
 

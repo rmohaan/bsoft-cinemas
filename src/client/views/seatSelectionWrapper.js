@@ -5,8 +5,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './header';
-import Footer from './footer';
-import Dashboard from './dashBoard';
+import SeatSelection from './seatSelection';
 import * as actions from '../actions/index';
 import { connect } from 'react-redux';
 
@@ -22,7 +21,7 @@ class Home extends React.Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(actions.fetchDashboardData());
+    this.props.dispatch(actions.fetchLayoutData());
   }
 
   render () {
@@ -31,11 +30,10 @@ class Home extends React.Component {
           <Header />
           <div className="container-fluid">
             <div className="row">
-                <h1 className="page-header" style={{textAlign: 'center'}}>Dashboard</h1>
-                <Dashboard />    
+                <h1 className="page-header" style={{textAlign: 'center'}}>Screen this way</h1>
+                <SeatSelection />
             </div>
           </div>
-          <Footer />
         </div>
       );
     }

@@ -1,17 +1,15 @@
 'use strict';
 
 let state = {
-  productsList: [],
-  selectedItems: [],
-  moqList: [],
-  orderInfo: {},
-  customerOrders: [],
-  customersList: [],
-  updatedStockItems:[],
-  authenticationDetails: {
-    authenticationMessage: '',
-    isAuthenticationSuccess: true,
-    userRole: ''
+  info: {
+    name: 'BSoft Cinemas',
+    screen: 1
+  },
+  data: {
+    layout: {
+      totalSeats: 20,
+      occupied: [1,2,3,4,15,6,17,18,9,10]
+    }
   }
 };
 

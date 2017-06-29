@@ -6,14 +6,8 @@ import * as reducers from '../reducers/index';
 import defaultState from './defaultState';
 
 const reducer = combineReducers({
-  productsList: reducers.productsList,
-  selectedItems: reducers.selectedItems,
-  updatedStockItems: reducers.updateStockItems,
-  orderInfo: reducers.orderInfo,
-  moqList: reducers.moqList,
-  customerOrders: reducers.customerOrders,
-  customersList: reducers.customersList,
-  authenticationDetails: reducers.authenticationDetails,
+  data: reducers.data,
+  info: reducers.info,
   routing: routerReducer
 });
 
