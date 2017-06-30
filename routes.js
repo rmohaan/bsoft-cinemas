@@ -3,22 +3,10 @@ module.exports = {
   getData (req, res, db) {
     res.status(200).json({
       layout: {
-        totalSeats: 20,
-        occupied: [1,2,3,4,15,6,17,18,9,10]
+        totalSeats: 80,
+        seatLayout: [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0],
+        //1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0
       }
     });
   },
-
-  submitData (req, res, db) {
-    req.body.createdOn = new Date();
-  //   db.collection('customers').insert(req.body, function (err, results) {
-  //     if (results.result.ok === 1) {
-  //       res.status(200).json(results);
-  //     } else {
-  //       res.status(500).json({
-  //         message: "Request Failed"
-  //       });
-  //     }
-  //   });
-   }
 };

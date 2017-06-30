@@ -13,7 +13,7 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
-export function fetchInfo () {
+export function fetchLayout () {
   return axios({
     method: 'get',
     url: '/api/getData'
@@ -26,16 +26,4 @@ export function submitData(items) {
     url: '/api/submitData',
     data: items
   });
-}
-
-export function fetchLayoutData () {
-  return axios.all([
-    fetchInfo()
-  ])
-  .then(axios.spread(function (responseData) {
-    // ... but this callback will be executed only when both requests are complete.
-    return {
-      data: responseData.data
-    };
-  }));
 }

@@ -32,22 +32,12 @@ app.use(bodyParser.json());
 
 app.use(favicon(path.join(imagesDir, 'favicon.ico')));
 
-
 app.get ('/', (req, res, next) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
 
-app.post('/api/getData',
-         (req, res, next) => routes.loginUser(req, res, next, passport));
-
 app.get('/api/getData',
         (req, res) => routes.getData(req, res));
-
-app.put('/api/submitData', (req, res) => routes.submitData(req, res));
-
-app.use((req, res, next) => {
-  res.sendFile(path.join(publicDir, 'index.html'));
-});
 
 app.listen(port, () => {
   console.log('listening on', port)

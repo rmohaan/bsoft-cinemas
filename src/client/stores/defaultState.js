@@ -2,14 +2,14 @@
 
 let state = {
   info: {
-    name: 'BSoft Cinemas',
-    screen: 1
+    movieName: 'Transformers - The Last Knight',
+    screen: "IMAX",
+    theatreName: "BSoft Grand Galada, Chennai",
+    date: new Date()
   },
-  data: {
-    layout: {
-      totalSeats: 20,
-      occupied: [1,2,3,4,15,6,17,18,9,10]
-    }
+  layout: {
+    totalSeats: 80,
+    seatLayout: [1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0],
   }
 };
 

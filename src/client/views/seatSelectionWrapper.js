@@ -10,30 +10,16 @@ import * as actions from '../actions/index';
 import { connect } from 'react-redux';
 
 class Home extends React.Component {
-  constructor () {
-    super();
-    this.state = {
-      links: ''
-    };
-    String.prototype.capitalize = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    }
-  }
 
   componentDidMount () {
-    this.props.dispatch(actions.fetchLayoutData());
+    this.props.dispatch(actions.fetchLayout());
   }
 
   render () {
       return (
         <div className="container-fluid">
           <Header />
-          <div className="container-fluid">
-            <div className="row">
-                <h1 className="page-header" style={{textAlign: 'center'}}>Screen this way</h1>
-                <SeatSelection />
-            </div>
-          </div>
+          <SeatSelection />
         </div>
       );
     }

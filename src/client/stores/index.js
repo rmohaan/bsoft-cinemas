@@ -6,7 +6,7 @@ import * as reducers from '../reducers/index';
 import defaultState from './defaultState';
 
 const reducer = combineReducers({
-  data: reducers.data,
+  layout: reducers.layout,
   info: reducers.info,
   routing: routerReducer
 });

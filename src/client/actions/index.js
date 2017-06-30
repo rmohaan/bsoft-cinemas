@@ -19,30 +19,16 @@ export function setLayoutData (data) {
   };
 }
 
-export function fetchInfo () {
+export function fetchLayout () {
   return function (dispatch) {
-    // dispatch(fetchingData());
-    return dataRequests.fetchInfo()
+    return dataRequests.fetchLayout()
        .then(function (response) {
          if (response.status === 200) {
-           dispatch(setInfo(response.data));
+           console.log("from datarequests", response);
+           dispatch(setLayoutData(response.data.layout));
          }
        })
        .catch((err) => {
-          dispatch(push('/'))
-       });
-  };
-}
-
-export function fetchLayoutData () {
-  return function (dispatch) {
-    // dispatch(fetchingData());
-    return dataRequests.fetchLayoutData()
-       .then(function (response) {
-         dispatch(setLayoutData(response));
-       })
-       .catch((err) => {
-         console.log(err);
           dispatch(push('/'))
        });
   };

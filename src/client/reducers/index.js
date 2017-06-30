@@ -2,7 +2,7 @@
 
 import * as actionEvents from '../actions/events';
 
-export function data (state, action) {
+export function layout (state, action) {
   let actionType = action.type,
       newState = Object.assign({}, state);
 
