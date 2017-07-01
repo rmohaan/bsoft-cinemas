@@ -68,7 +68,7 @@ div {
 }
 
 .movie-details {
-  font-size: 20;
+  font-size: 20px;
   background: #dff0d8;
   height: 415px;
 }
@@ -78,7 +78,7 @@ div {
 }
 
 .pick-seat-text {
-  height: 20;
+  height: 20px;
   vertical-align: bottom;
   color: maroon;
   border-bottom: maroon solid;
@@ -106,17 +106,17 @@ div {
   margin-top: 50px;
   border-top-color: green;
   border-top-style: solid;
-  border-top-width: 1;
+  border-top-width: 1px;
   text-align: right;
 }
 
 .seat-container {
-  padding-top: 10;
-  padding-left: 25;
+  padding-top: 10px;
+  padding-left: 25px;
   margin-left: 25%;
   border-style: solid;
-  border-width: 1;
-  height: 420;
+  border-width: 1px;
+  height: 420px;
   background-color: white;
 }
 
@@ -124,27 +124,26 @@ div {
   border-radius: 10px;
   border-style: solid;
   border-color: #ccc;
-  border-width: 1;
-  height: 40;
+  border-width: 1px;
+  height: 40px;
   background-color: #eaeaea;
-  margin-right: 5;
-  margin-left: 5;
-  margin-top: 5;
-  margin-bottom: 5;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .seat-free {
   border-radius: 10px;
   border-style: solid;
-  // border-color: #00bfff;
   border-color: #49ba8e;
-  border-width: 1;
-  height: 40;
+  border-width: 1px;
+  height: 40px;
   background-color: white;
-  margin-right: 5;
-  margin-left: 5;
-  margin-top: 5;
-  margin-bottom: 5;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 
@@ -170,6 +169,20 @@ div {
 .price-summary {
   font-size: 14px;
   font-weight: lighter;
+}
+
+.legend-button {
+  margin-left: 17px;
+  background: #49ba8e;
+  color: white;
+  border: none;
+  border-radius: 0px;
+}
+
+.legend-button:hover, .legend-button:active {
+  background: #49ba8e;
+  color: white;
+  border: none;
 }
 
 .loader {

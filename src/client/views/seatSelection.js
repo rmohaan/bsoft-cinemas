@@ -11,11 +11,13 @@ class SeatSelection extends React.Component {
   constructor () {
     super();
     this.state = {
-      selectedSeats: []
+      selectedSeats: [],
+      showLegend: false
     };
     this.handleSeatSelection = (event) => this._handleSeatSelection(event);
     this.getSeatsLayout = (data) => this._getSeatsLayout(data);
     this.getMovieSummary = (data) => this._getMovieSummary(data);
+    this.handleShowLegend = () => this._handleShowLegend();
   }
 
   _handleSeatSelection(event) {
@@ -96,6 +98,34 @@ class SeatSelection extends React.Component {
     )
   }
 
+  getLegendLayout () {
+    return (
+      <div className="col-md-4">
+        <div className="col-md-3">
+          <div className="seat-free legend-item">
+          </div>
+          <span>Available</span>
+        </div>
+        <div className="col-md-3">
+          <div className="seat-occupied legend-item">
+          </div>
+          <span>Booked</span>
+        </div>
+        <div className="col-md-3">
+          <div className="seat-free selected legend-item">
+          </div>
+          <span>Selected</span>
+        </div>
+      </div>
+    )
+  }
+
+  _handleShowLegend () {
+    this.setState({
+      showLegend: !this.state.showLegend
+    })
+  }
+
 render () {
     let info = this.props.info ? this.props.info : [];
       if (info) {
@@ -128,26 +158,10 @@ render () {
             </div>
             </div>
             <div className="row legend">
-                <div className="col-md-4">
-                  <div className="col-md-12 legend-head-text">
-                    Seats Legend
-                  </div>
-                  <div className="col-md-3">
-                    <div className="seat-free legend-item">
-                    </div>
-                    <span>Available</span>
-                  </div>
-                  <div className="col-md-3">
-                    <div className="seat-occupied legend-item">
-                    </div>
-                    <span>Booked</span>
-                  </div>
-                  <div className="col-md-3">
-                    <div className="seat-free selected legend-item">
-                    </div>
-                    <span>Selected</span>
-                  </div>
+                <div className="col-md-12">
+                  <buttton className="btn legend-button" onClick={this.handleShowLegend}>Show Seats Legend</buttton>
                 </div>
+                {this.state.showLegend ? this.getLegendLayout() : null}
             </div>
           </div>
 
