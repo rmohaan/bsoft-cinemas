@@ -60,7 +60,8 @@
   },
   "scripts": {
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
-    "start": "node server.js",
+    "start": "npm-run-all build startServer",
+    "startServer": "node server.js",
     "startDev": "nodemon server.js",
     "buildDev": "webpack -d --watch",
     "build": "webpack -d"
