@@ -20,7 +20,6 @@ coverage
 # cache files for sublime text
 *.tmlanguage.cache
 *.tmPreferences.cache
-*.stTheme.cache
 
 # workspace files are user-specific
 *.sublime-workspace
