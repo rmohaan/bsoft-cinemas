@@ -33,6 +33,10 @@ class SeatSelection extends React.Component {
       selectedIndex.splice(selectedIndex.indexOf(clickedSeat), 1);
     }
     else {
+      if (this.state.selectedSeats.length >= 15) {
+        alert("Maximum seats allowed per transaction is 15")
+        return;
+      }
       selection.push(selectedSeat);
       selectedIndex.push(clickedSeat);
     }
@@ -107,7 +111,7 @@ class SeatSelection extends React.Component {
             Seats {selectedSeats > 0 ? ' - ' + selectedSeats : ''}
             <div className={summaryStyle}>
               { selectedSeats > 0 ?
-                this.state.selectedSeats.sort(sortAlphaNumeric).toString() :
+                this.state.selectedSeats.sort(sortAlphaNumeric).join(', ') :
                 '-'
               }
              </div>
