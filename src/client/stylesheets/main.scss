@@ -30,11 +30,18 @@ body {
   color: #fff;
 }
 
+.navbar-brand:hover {
+  color: white;
+}
+
 .screen {
   background-color: gainsboro;
   border: 2px solid gainsboro;
   margin-bottom: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 91%;
 }
 
  .hide {
@@ -62,15 +69,29 @@ div {
   overflow-wrap: break-word;
 }
 
-.flexFooter {
+.flex-footer {
   display: flex;
   justify-content: space-between;
+  border-top-color: #49ba8e;
+  height: 4pc;
+}
+
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 430px;
 }
 
 .movie-details {
   font-size: 20px;
-  background: #dff0d8;
-  height: 415px;
+  border: #49ba8e solid 1px;
+  background: #b1ebd8;
+  border-top-left-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 425px;
 }
 
 .movie-details-items {
@@ -80,24 +101,42 @@ div {
 .pick-seat-text {
   height: 20px;
   vertical-align: bottom;
-  color: maroon;
-  border-bottom: maroon solid;
+  color: white;
+  border-bottom: white solid;
   border-bottom-width: 2px;
   width: 95px;
 }
 
 .panel-container {
-  margin-left: 15%;
-  width: 70%;
+  margin-left: 12.5%;
+  width: 75%;
   margin-top: 25px;
+  border-color: #49ba8e;
+  border-radius: 0px;
+}
+
+.panel-heading {
+  background: #49ba8e;
+  border-radius: 0px;
+}
+
+.panel-body-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: space-between;
+  justify-content: space-between;
 }
 
 .selected-seat-text {
   align-self: center;
-}
-
-.col-md-1 {
-  margin: .8% !important;
+  background-color: gainsboro;
+  border: 7px solid gainsboro;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: black;
 }
 
 .amount-text {
@@ -111,13 +150,36 @@ div {
 }
 
 .seat-container {
-  padding-top: 10px;
-  padding-left: 25px;
-  margin-left: 25%;
-  border-style: solid;
-  border-width: 1px;
-  height: 420px;
-  background-color: white;
+  width: 65%;
+  flex-direction: column;
+  display: flex;
+}
+
+.seat-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.seat-rows {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.seat-row-name {
+  flex-direction: row;
+  display: flex;
+  width: 6.3%;
+  justify-content: center;
+}
+
+.seat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  width: 6.3%;
 }
 
 .seat-occupied {
@@ -131,6 +193,7 @@ div {
   margin-left: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
+  color: #ccc;
 }
 
 .seat-free {
@@ -145,25 +208,13 @@ div {
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
+  color: black;
 }
 
 .selected {
   background-color: #49ba8e;
   border-color: #49ba8e;
-}
-
-.legend {
-  margin-left: 175px;
-}
-
-.legend-item {
-  width: 45px;
-  cursor: default;
-}
-
-.legend-head-text {
-  font-size: 16;
-  font-weight: bold;
+  color: white;
 }
 
 .price-summary {
@@ -171,23 +222,75 @@ div {
   font-weight: lighter;
 }
 
-.legend-button {
-  margin-left: 17px;
+.legend {
+  margin-left: 173px;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.legend-item {
+  width: 45px;
+  cursor: default;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.legend-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.legend-head-text {
+  font-size: 16;
+  font-weight: bold;
+}
+
+.button-legend {
   background: #49ba8e;
   color: white;
   border: none;
   border-radius: 0px;
 }
 
-.legend-button:hover, .legend-button:active {
+.button-legend:hover, .button-legend:active, .button-success:hover, .button-success:active, .button-success:focus {
   background: #49ba8e;
   color: white;
-  border: none;
+  border-color: green;
+}
+
+.button-success {
+  background: #49ba8e;
+  border-radius: 0px;
+  color: white;
+  width: 100%;
+}
+
+.button-checkout-container {
+  display: flex;
+  flex-direction: row;
+  width: 35%;
+  height: 3em;
+  justify-content: center;
+  align-self: center;
+}
+
+.ticket-summary-text {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  align-self: center;
 }
 
 .loader {
   color: #cc1119;
-  bg: #ffb85b;
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;

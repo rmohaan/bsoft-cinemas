@@ -4,7 +4,7 @@ let state = {
   info: {
     movieName: 'Transformers - The Last Knight',
     screen: "IMAX",
-    theatreName: "BSoft Grand Galada, Chennai",
+    theatreName: "BSoft Cinemas - Grand Galada",
     date: new Date()
   },
   layout: {

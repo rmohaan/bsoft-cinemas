@@ -34,7 +34,14 @@ var config = {
   sassLoader: {
     includePaths: [path.resolve(__dirname, APP_DIR)]
   },
-  devtool: 'inline-source-map'
+  devtool: 'inline-source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify('production')
+        }
+      }),
+  ]
 };
 
 module.exports = config;

@@ -24,7 +24,6 @@ export function fetchLayout () {
     return dataRequests.fetchLayout()
        .then(function (response) {
          if (response.status === 200) {
-           console.log("from datarequests", response);
            dispatch(setLayoutData(response.data.layout));
          }
        })
