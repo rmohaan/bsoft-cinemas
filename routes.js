@@ -14,7 +14,7 @@ module.exports = {
     res.status(200).json({
       layout: {
         totalSeats: TOTAL_SEATS,
-        seatLayout: getSeatsLayout(),
+        seatLayout: createSeatsLayout(),
       }
     });
   },
