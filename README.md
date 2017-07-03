@@ -14,14 +14,19 @@ $ npm install broadsoft-cinemas --save
 $ npm install
 ```
 
+## Build and Run server
+```sh
+$ npm run start
+```
+
 ## Build package
 ```sh
-$ npm run buildDev
+$ npm run build
 ```
 
 ## Run server
 ```sh
-$ npm run startDev
+$ npm run startServer
 ```
 
 ## Open website
