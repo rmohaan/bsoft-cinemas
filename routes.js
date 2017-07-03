@@ -1,6 +1,6 @@
 const TOTAL_SEATS = 80;
 
-function getSeatsLayout() {
+function createSeatsLayout() {
   let seatsLayout = [];
   for (let i=0; i<TOTAL_SEATS; i++) {
     seatsLayout.push(Math.round(Math.random()));
